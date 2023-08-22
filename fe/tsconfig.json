@@ -29,7 +29,8 @@
       "@utils/*": ["utils/*"],
       "@styles/*": ["styles/*"],
       "@contexts/*": ["contexts/*"],
-      "@constants/*": ["constants/*"]
+      "@constants/*": ["constants/*"],
+      "@test/*": ["test/*"]
     }
   },
   "include": ["src"],

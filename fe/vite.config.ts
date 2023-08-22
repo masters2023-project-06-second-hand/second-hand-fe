@@ -15,6 +15,7 @@ export default defineConfig({
       '@styles': resolve(__dirname, './src/styles'),
       '@contexts': resolve(__dirname, './src/contexts'),
       '@constants': resolve(__dirname, './src/constants'),
+      '@test': resolve(__dirname, './src/test'),
     },
   },
 });
