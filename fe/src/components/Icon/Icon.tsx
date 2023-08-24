@@ -78,7 +78,6 @@ export const Icon: React.FC<IconProps> = ({
   const fillColor = isColorKey(fill) ? theme.color[fill] : fill;
   const strokeColor = isColorKey(stroke) ? theme.color[stroke] : stroke;
   const iconSize = size === 'M' ? 24 : 16;
-  console.log(theme.color.accentPrimary);
 
   return (
     <IconComponent

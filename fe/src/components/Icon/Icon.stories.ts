@@ -1,4 +1,3 @@
-import { theme } from '@styles/DesignSystem';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { Icon } from './Icon';
@@ -36,13 +35,6 @@ const meta = {
         'accentText',
         'accentTextWeak',
       ],
-      mapping: {
-        neutralTextStrong: theme.color.neutralTextStrong,
-        neutralTextWeak: theme.color.neutralTextWeak,
-        neutralText: theme.color.neutralText,
-        accentText: theme.color.accentText,
-        accentTextWeak: theme.color.accentTextWeak,
-      },
     },
     stroke: {
       control: { type: 'select' },
@@ -55,13 +47,6 @@ const meta = {
         'accentText',
         'accentTextWeak',
       ],
-      mapping: {
-        neutralTextStrong: theme.color.neutralTextStrong,
-        neutralTextWeak: theme.color.neutralTextWeak,
-        neutralText: theme.color.neutralText,
-        accentText: theme.color.accentText,
-        accentTextWeak: theme.color.accentTextWeak,
-      },
     },
   },
 } satisfies Meta<typeof Icon>;
