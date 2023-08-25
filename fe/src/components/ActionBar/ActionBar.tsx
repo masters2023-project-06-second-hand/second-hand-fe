@@ -29,8 +29,17 @@ export const ActionBar: React.FC<Props> = ({
         <Contents>
           <Info>
             <LikeButton onClick={onClickLike}>
-              {!isLiked && <Icon name={'heart'} size={'M'} />}
-              {isLiked && <Icon name={'heartFilled'} />}
+              {!isLiked && (
+                <Icon name="heart" size="M" stroke="neutralTextStrong" />
+              )}
+              {isLiked && (
+                <Icon
+                  name="heartFilled"
+                  size="M"
+                  fill="accentPrimary"
+                  stroke="none"
+                />
+              )}
             </LikeButton>
             <Price>{price} 원</Price>
           </Info>
