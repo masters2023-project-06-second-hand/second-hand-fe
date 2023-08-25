@@ -12,8 +12,8 @@ export const theme = {
     neutralBackgroundBold: colors.gray400,
     neutralBackgroundBlur: colors.gray100,
 
-    neutralborder: colors.gray500,
-    neutralborderStrong: colors.gray700,
+    neutralBorder: colors.gray500,
+    neutralBorderStrong: colors.gray700,
 
     neutralOveray: colors.gray600,
 
