@@ -21,7 +21,7 @@ const meta = {
       defaultValue: '빈티지 롤러 스케이트',
     },
     price: {
-      control: { type: 'radio' },
+      control: { type: 'text' },
       description: '상품 가격',
       defaultValue: '169,000',
     },
