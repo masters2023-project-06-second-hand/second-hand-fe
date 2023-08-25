@@ -1,5 +1,4 @@
 import { Icon } from '@components/Icon/Icon';
-import { theme } from '@styles/DesignSystem';
 import React from 'react';
 import { styled } from 'styled-components';
 
@@ -40,11 +39,7 @@ export const ActionBar: React.FC<Props> = ({
       )}
       {isAdd && (
         <RegionButton onClick={onClickRegion}>
-          <Icon
-            name={'mapPinFIlled'}
-            size={'M'}
-            fill={theme.color.neutralTextStrong}
-          />
+          <Icon name={'mapPinFilled'} size={'M'} fill={'neutralTextStrong'} />
           <Region>{region}</Region>
         </RegionButton>
       )}
@@ -58,9 +53,9 @@ const Wrapper = styled.div`
   align-items: center;
   width: 100%;
   height: 64px;
-  background-color: ${theme.color.neutralBackgroundWeak};
-  font: ${theme.font.displayDefault16};
-  color: ${theme.color.neutralTextStrong};
+  background-color: ${({ theme }) => theme.color.neutralBackgroundWeak};
+  font: ${({ theme }) => theme.font.displayDefault16};
+  color: ${({ theme }) => theme.color.neutralTextStrong};
 `;
 
 const Contents = styled.div`
@@ -84,9 +79,9 @@ const ChatButton = styled.button`
   width: auto;
   height: 100%;
   border-radius: 8px;
-  color: ${theme.color.accentText};
-  background-color: ${theme.color.accentPrimary};
-  font: ${theme.font.availableStrong12};
+  color: ${({ theme }) => theme.color.accentText};
+  background-color: ${({ theme }) => theme.color.accentPrimary};
+  font: ${({ theme }) => theme.font.availableStrong12};
 `;
 
 const Price = styled.span``;

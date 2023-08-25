@@ -13,7 +13,7 @@ import { ReactComponent as HeartFilled } from '@assets/heart-filled.svg';
 import { ReactComponent as Heart } from '@assets/heart.svg';
 import { ReactComponent as Home } from '@assets/home.svg';
 import { ReactComponent as LayoutGrid } from '@assets/layout-grid.svg';
-import { ReactComponent as MapPinFIlled } from '@assets/map-pin-filled.svg';
+import { ReactComponent as MapPinFilled } from '@assets/map-pin-filled.svg';
 import { ReactComponent as MessageNoti } from '@assets/message-noti.svg';
 import { ReactComponent as Message } from '@assets/message.svg';
 import { ReactComponent as News } from '@assets/news.svg';
@@ -40,7 +40,7 @@ export const icons = {
   heart: Heart,
   home: Home,
   layoutGrid: LayoutGrid,
-  mapPinFIlled: MapPinFIlled,
+  mapPinFilled: MapPinFilled,
   messageNoti: MessageNoti,
   message: Message,
   news: News,

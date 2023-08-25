@@ -1,7 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-
-import { Icon } from './Icon';
-import { icons } from './Icon';
+import { Icon, icons } from './Icon';
 
 const meta = {
   title: 'Component/Icon',
@@ -117,7 +115,7 @@ export const LayoutGrid: Story = {
 
 export const MapPinFIlled: Story = {
   args: {
-    name: 'mapPinFIlled',
+    name: 'mapPinFilled',
     fill: 'neutralTextStrong',
   },
 };
