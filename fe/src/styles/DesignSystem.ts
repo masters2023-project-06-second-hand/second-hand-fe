@@ -42,4 +42,11 @@ export const theme = {
     enabledStrong16: fonts.bold16,
     enabledStrong10: fonts.bold10,
   },
+
+  radius: {
+    half: '50%',
+    small: '8px',
+    medium: '12px',
+    large: '16px',
+  },
 };
