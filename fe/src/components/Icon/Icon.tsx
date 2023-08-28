@@ -56,7 +56,7 @@ export const icons = {
 
 interface IconProps {
   name: keyof typeof icons;
-  size?: 'M' | 'S';
+  size?: 'S' | 'M' | 'L';
   fill?: string;
   stroke?: string;
 }
@@ -77,7 +77,7 @@ export const Icon: React.FC<IconProps> = ({
 
   const fillColor = isColorKey(fill) ? theme.color[fill] : fill;
   const strokeColor = isColorKey(stroke) ? theme.color[stroke] : stroke;
-  const iconSize = size === 'M' ? 24 : 16;
+  const iconSize = size === 'S' ? 16 : 24;
 
   return (
     <IconComponent

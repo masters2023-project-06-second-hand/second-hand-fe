@@ -4,13 +4,13 @@ import { Icon, icons } from '@components/Icon/Icon';
 
 /* 분리하기 */
 const BUTTON_STYLE = {
-  S: { width: 'inhernt', padding: '8px 16px', font: 'availableStrong12' },
+  S: { width: 'max-content', padding: '8px 16px', font: 'availableStrong12' },
   M: { width: '288px', padding: '16px', font: 'availableStrong16' },
   L: { width: '329px', padding: '16px', font: 'availableStrong16' },
 };
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
-  backgroundColor: string;
+  backgroundColor: 'accentPrimary' | 'accentText';
   size: 'S' | 'M' | 'L';
   text: string;
   icon?: keyof typeof icons;
@@ -24,9 +24,6 @@ export const Button: React.FC<ButtonProps> = ({
   text,
   ...props
 }) => {
-  const iconColor =
-    backgroundColor === 'accentPrimary' ? 'accentText' : 'accentTextWeak';
-
   return (
     <StyledButton
       type={type}
@@ -34,7 +31,7 @@ export const Button: React.FC<ButtonProps> = ({
       size={size}
       {...props}
     >
-      {icon && <Icon name={icon} stroke={iconColor} />}
+      {icon && <Icon size={size} name={icon} stroke="currentColor" />}
       {text}
     </StyledButton>
   );
