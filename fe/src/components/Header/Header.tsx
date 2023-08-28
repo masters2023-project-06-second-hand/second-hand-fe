@@ -32,8 +32,6 @@ Header.Right = RightContent;
 
 const HeaderContainer = styled.header<{ $backgroundColor: string }>`
   width: 100%;
-  max-width: 393px;
-  width: 393px;
   display: flex;
   justify-content: space-between;
   align-items: center;
