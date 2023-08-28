@@ -6,6 +6,13 @@ import { TextButton } from '@components/Button/TextButton';
 const meta = {
   title: 'Component/Header',
   component: Header,
+  decorators: [
+    (Story) => (
+      <div style={{ width: '393px' }}>
+        <Story />
+      </div>
+    ),
+  ],
   parameters: {
     layout: 'centered',
   },
@@ -45,16 +52,16 @@ export const Default: Story = {
 };
 
 export const CenterOnly: Story = {
-  render: (args) => (
-    <Header {...args}>
+  render: () => (
+    <Header>
       <Header.Center>관심 목록</Header.Center>
     </Header>
   ),
 };
 
 export const BothSide: Story = {
-  render: (args) => (
-    <Header {...args}>
+  render: () => (
+    <Header>
       <Header.Left>
         <TextButton size="M" textColor="neutralTextStrong">
           역삼1동
@@ -62,15 +69,17 @@ export const BothSide: Story = {
         </TextButton>
       </Header.Left>
       <Header.Right>
-        <Icon name="layoutGrid" size="M" stroke="neutralTextStrong" />
+        <button style={{ padding: '8px' }}>
+          <Icon name="layoutGrid" size="M" stroke="neutralTextStrong" />
+        </button>
       </Header.Right>
     </Header>
   ),
 };
 
 export const BothSideTransparent: Story = {
-  render: (args) => (
-    <Header {...args} backgroundColor="transparent">
+  render: () => (
+    <Header backgroundColor="transparent">
       <Header.Left>
         <TextButton size="M" textColor="accentText">
           <Icon name="chevronLeft" size="M" stroke="accentText" />

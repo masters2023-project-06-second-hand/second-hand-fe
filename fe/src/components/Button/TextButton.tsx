@@ -32,5 +32,6 @@ const StyledButton = styled.button<{ $textColor: string; size: 'S' | 'M' }>`
 
   &:disabled {
     color: ${({ theme: { color } }) => color.neutralTextWeak};
+    pointer-events: none;
   }
 `;
