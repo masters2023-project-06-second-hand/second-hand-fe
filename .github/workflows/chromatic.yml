@@ -16,6 +16,8 @@ jobs:
     # Job steps
     steps:
       - uses: actions/checkout@v3
+      - name: Change directory to 'fe'
+        run: cd fe
       - run: yarn
         #👇 Adds Chromatic as a step in the workflow
       - uses: chromaui/action@v1
