@@ -10,6 +10,8 @@ export const ActionBar: React.FC<Props> = ({ children }) => {
 };
 
 const Wrapper = styled.div`
+  position: fixed;
+  bottom: 0;
   padding: 16px;
   display: flex;
   align-items: center;
@@ -18,4 +20,13 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.color.neutralBackgroundWeak};
   font: ${({ theme }) => theme.font.displayDefault16};
   color: ${({ theme }) => theme.color.neutralTextStrong};
+  &::before {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    content: '';
+    width: 100%;
+    height: 1px;
+    background-color: ${({ theme }) => theme.color.neutralBorder};
+  }
 `;

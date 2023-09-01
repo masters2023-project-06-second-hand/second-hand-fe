@@ -1,4 +1,5 @@
-import { RegionButton } from '@components/Button/RegionButton';
+import { TextButton } from '@components/Button/TextButton';
+import { Icon } from '@components/Icon/Icon';
 import { styled } from 'styled-components';
 
 type Props = {
@@ -8,8 +9,10 @@ type Props = {
 export const EditBar: React.FC<Props> = ({ regionName }) => {
   return (
     <Bar>
-      <RegionButton regionName={regionName} onClick={() => {}} />
-      {/* 클릭 이벤트 추가 */}
+      <RegionButton onClick={() => {}}>
+        <Icon name="mapPinFilled" fill="neutralTextStrong" />
+        <Region>{regionName}</Region>
+      </RegionButton>
     </Bar>
   );
 };
@@ -18,4 +21,15 @@ const Bar = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
+`;
+
+const RegionButton = styled(TextButton)`
+  padding: 0;
+  height: 100%;
+  user-select: none;
+`;
+
+const Region = styled.span`
+  color: ${({ theme }) => theme.color.neutralTextStrong};
+  font: ${({ theme }) => theme.font.availableDefault16};
 `;

@@ -30,7 +30,8 @@
       "@styles/*": ["styles/*"],
       "@contexts/*": ["contexts/*"],
       "@constants/*": ["constants/*"],
-      "@test/*": ["test/*"]
+      "@test/*": ["test/*"],
+      "@routes": ["routes/*"]
     }
   },
   "include": ["src"],

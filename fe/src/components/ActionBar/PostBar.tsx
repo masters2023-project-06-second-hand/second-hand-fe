@@ -31,7 +31,7 @@ export const PostBar: React.FC<Props> = ({ id, isLiked, price }) => {
     <Bar>
       <Info>
         <LikeButton isClicked={isClicked} onClick={toggleLikeButton} />
-        <Price>{formatPrice(price)} 원</Price>
+        <Price>{formatPrice(price)}</Price>
       </Info>
       <Button
         backgroundColor="accentPrimary"
