@@ -168,7 +168,6 @@ const ModalBase = styled.div`
   border-radius: ${({ theme: { radius } }) => radius.large};
   background-color: ${({ theme: { color } }) => color.neutralBackground};
   overflow: hidden;
-  z-index: 1000;
 `;
 
 const ButtonBase = styled.button`
@@ -233,7 +232,6 @@ const AlertWrapper = styled.div`
   border-radius: ${({ theme: { radius } }) => radius.large};
   background-color: ${({ theme: { color } }) => color.neutralBackground};
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  z-index: 1000;
 `;
 const Message = styled.div`
   padding: 24px;
