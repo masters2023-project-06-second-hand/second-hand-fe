@@ -14,18 +14,14 @@
  */
 
 export default function formatPrice(price: number): string {
-  if (price === 0) return '가격 없음';
-
   const billion = Math.floor(price / 100000000);
   const tenThousand = Math.floor((price % 100000000) / 10000);
 
-  if (billion && tenThousand) {
+  if (price === 0) return '가격 없음';
+  if (billion && tenThousand)
     return `${billion}억 ${tenThousand.toLocaleString()}만원`;
-  } else if (billion) {
-    return `${billion}억원`;
-  } else if (price >= 1000000) {
-    return `${tenThousand}만원`;
-  }
+  if (billion) return `${billion}억원`;
+  if (price >= 1000000) return `${tenThousand}만원`;
 
   return `${price.toLocaleString()}원`;
 }

@@ -1,20 +1,25 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 import { useAtom } from 'jotai';
 import { useModal, modalStackAtom } from './useModal';
 import { createModalComponent } from './index';
 
-const getZIndex = (index: number) => 1000 + index;
+const getZIndex = (index: number) => 1 + index;
 
 export const GlobalModal: React.FC = () => {
   const [modalStack] = useAtom(modalStackAtom);
   const { closeModal } = useModal();
 
+  const modalRoot = document.getElementById('modal-root');
+
+  if (!modalRoot) return null;
+
   if (modalStack.length === 0) return null;
 
   const lastModalIndex = modalStack.length - 1;
 
-  return (
+  return ReactDOM.createPortal(
     <>
       {modalStack.map((modalState, index) => {
         return (
@@ -32,7 +37,8 @@ export const GlobalModal: React.FC = () => {
           </React.Fragment>
         );
       })}
-    </>
+    </>,
+    modalRoot
   );
 };
 
