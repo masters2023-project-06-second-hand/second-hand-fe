@@ -1,11 +1,11 @@
 import { ReactNode } from 'react';
 import { Dropdown } from './Dropdown';
 
-interface DropdownProps {
+type DropdownProps = {
   trigger: ReactNode;
   children: ReactNode;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-}
+};
 
 /* Todo. 마지막 Option 빨간 글씨 처리 안되어있음 */
 

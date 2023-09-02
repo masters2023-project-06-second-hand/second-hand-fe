@@ -2,11 +2,11 @@ import { ReactNode } from 'react';
 import styled from 'styled-components';
 import { useDropdown } from './useDropdown';
 
-interface DropdownProps {
+type DropdownProps = {
   trigger: ReactNode;
   children: ReactNode;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-}
+};
 
 export const Dropdown: React.FC<DropdownProps> = ({
   trigger,
@@ -34,12 +34,11 @@ const Overlay = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.2);
 `;
 
 const Wrapper = styled.div`
   position: relative;
-  background-color: yellow;
 `;
 
 const Trigger = styled.div``;

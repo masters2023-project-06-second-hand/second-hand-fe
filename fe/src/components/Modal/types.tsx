@@ -2,16 +2,16 @@ import { CSSProperties } from 'react';
 
 export type ModalType = 'regionSetting' | 'searchRegion' | 'category' | 'alert';
 
-export interface BaseModalProps {
+export type BaseModalProps = {
   style?: CSSProperties;
-}
+};
 
-export interface AlertModalProps extends BaseModalProps {
+export type AlertModalProps = BaseModalProps & {
   message: string;
   leftButtonText: string;
   rightButtonText: string;
   onDelete: () => void;
-}
+};
 
 export type RegionSettingModalProps = BaseModalProps;
 export type SearchRegionModalProps = BaseModalProps;
@@ -21,7 +21,7 @@ export type ModalPropsMapping = {
   [key in ModalType]: BaseModalProps | AlertModalProps;
 };
 
-export interface ModalState<T extends ModalType = ModalType> {
+export type ModalState<T extends ModalType = ModalType> = {
   type: T;
   props: ModalPropsMapping[T];
-}
+};
