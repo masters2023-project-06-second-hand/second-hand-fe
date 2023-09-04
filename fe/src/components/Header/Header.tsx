@@ -34,7 +34,7 @@ const HeaderContainer = styled.header<{ $backgroundColor: string }>`
   position: fixed;
   top: 0;
   z-index: 100;
-  width: 100%;
+  width: inherit;
   display: flex;
   justify-content: space-between;
   align-items: center;

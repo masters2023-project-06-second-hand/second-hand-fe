@@ -12,11 +12,11 @@ interface MenuItems {
 }
 
 const MENU_LISTS: MenuItems[] = [
-  { name: 'home', label: '홈화면', path: '/home' },
+  { name: 'home', label: '홈화면', path: '' },
   { name: 'news', label: '판매내역', path: '/history' },
   { name: 'heart', label: '관심상품', path: '/liked' },
   { name: 'message', label: '채팅', path: '/chat' },
-  { name: 'userCircle', label: '내 계정', path: '/profile' },
+  { name: 'userCircle', label: '내 계정', path: '/account' },
 ];
 
 export const NavigationBar = () => {
@@ -33,7 +33,7 @@ export const NavigationBar = () => {
       {MENU_LISTS.map((menu) => (
         <NavItem
           key={menu.name}
-          isSelected={selectedMenu === menu.name}
+          $isSelected={selectedMenu === menu.name}
           onClick={() => handleNavigation(menu.name, menu.path)}
         >
           <Icon name={menu.name} stroke="currentColor" />
@@ -45,20 +45,32 @@ export const NavigationBar = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 8px 16px;
+  max-width: 393px;
+  width: 100%;
   display: flex;
-  width: 393px;
+  justify-content: space-between;
+  position: fixed;
+  bottom: 0;
+  height: 64px;
+  padding: 0 16px;
+  background-color: ${({ theme: { color } }) => color.neutralBackground};
+  border-top: 0.8px solid ${({ theme: { color } }) => color.neutralBorder};
 `;
 
-const NavItem = styled.button<{ isSelected: boolean }>`
-  color: ${({ theme: { color }, isSelected }) =>
-    isSelected ? color.neutralTextStrong : color.neutralTextWeak};
-  font: ${({ theme: { font } }) => font.avalibleStrong10};
+const NavItem = styled.button<{ $isSelected: boolean }>`
   display: flex;
+  margin: 8px 0;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   transition: all 0.3s;
+  white-space: nowrap;
+  padding: 4px 16px;
+  width: auto;
+  color: ${({ theme: { color }, $isSelected }) =>
+    $isSelected ? color.neutralTextStrong : color.neutralTextWeak};
+  font: ${({ theme: { font, $isSelected } }) =>
+    $isSelected ? font.enabledStrong10 : font.availableStrong10};
 
   &:hover {
     color: ${({ theme: { color } }) => color.neutralTextStrong};
