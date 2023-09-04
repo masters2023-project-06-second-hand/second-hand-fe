@@ -30,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 
 export const IconText: Story = {
   render: (args) => (
-    <TextButton {...args}>
+    <TextButton>
       <Icon name="chevronLeft" size={args.size} stroke={args.textColor} />
       뒤로
     </TextButton>
@@ -44,18 +44,6 @@ export const TextOnly: Story = {
   args: {
     children: '회원가입',
     size: 'S',
-  },
-};
-
-export const IconOnly: Story = {
-  render: (args) => (
-    <TextButton {...args}>
-      <Icon name="layoutGrid" size={args.size} stroke={args.textColor} />
-    </TextButton>
-  ),
-  args: {
-    textColor: 'neutralTextStrong',
-    size: 'M',
   },
 };
 
