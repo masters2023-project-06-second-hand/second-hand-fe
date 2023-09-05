@@ -18,8 +18,8 @@ const Body = styled.div`
   width: 393px;
   display: flex;
   justify-content: center;
-  align-items: center;
   margin: 0 auto;
   height: 100vh;
+  padding-top: 56px;
   outline: 1px solid ${({ theme: { color } }) => color.neutralBorder};
 `;

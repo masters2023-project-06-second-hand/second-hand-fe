@@ -27,7 +27,7 @@ export const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
 
   return (
     <Wrapper>
-      <Thumbnail src="https://avatars.githubusercontent.com/u/142768426?s=48&v=4" />
+      <Thumbnail src={item.thumbnailUrl} />
       <Content>
         <Top>
           <Info>
