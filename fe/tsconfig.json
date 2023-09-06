@@ -31,7 +31,8 @@
       "@contexts/*": ["contexts/*"],
       "@constants/*": ["constants/*"],
       "@test/*": ["test/*"],
-      "@routes/*": ["routes/*"]
+      "@routes/*": ["routes/*"],
+      "@api/*": ["api/*"],
     }
   },
   "include": ["src"],
