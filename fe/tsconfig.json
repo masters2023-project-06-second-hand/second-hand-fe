@@ -32,7 +32,9 @@
       "@constants/*": ["constants/*"],
       "@test/*": ["test/*"],
       "@routes/*": ["routes/*"],
+      "@mocks/*": ["mocks/*"],
       "@api/*": ["api/*"],
+      "@react-query/*": ["react-query/*"]
     }
   },
   "include": ["src"],
