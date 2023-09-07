@@ -179,4 +179,5 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: start;
+  position: relative;
 `;

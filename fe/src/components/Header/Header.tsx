@@ -44,4 +44,5 @@ const HeaderContainer = styled.header<{ $backgroundColor: string }>`
   background-color: ${({ theme, $backgroundColor = 'neutralBackgroundBlur' }) =>
     theme.color[$backgroundColor]};
   backdrop-filter: blur(4px);
+  z-index: 1;
 `;

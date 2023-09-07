@@ -17,12 +17,14 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <Wrapper ref={dropdownRef}>
-      {isOpen && <Overlay onClick={toggleDropdown}></Overlay>}
       <Trigger onClick={toggleDropdown}>{trigger}</Trigger>
       {isOpen && (
-        <List $position={position} onClick={toggleDropdown}>
-          {children}
-        </List>
+        <>
+          <Overlay onClick={toggleDropdown} />
+          <List $position={position} onClick={toggleDropdown}>
+            {children}
+          </List>
+        </>
       )}
     </Wrapper>
   );
