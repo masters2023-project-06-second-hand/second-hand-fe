@@ -2,15 +2,14 @@ import React from 'react';
 import { styled } from 'styled-components';
 
 type Props = {
-  id: string;
   title: string;
   isSelected: boolean;
-  onClick(e: React.MouseEvent<HTMLButtonElement>): void;
+  onClick(): void;
 };
 
-export const Tag: React.FC<Props> = ({ id, title, isSelected, onClick }) => {
+export const Tag: React.FC<Props> = ({ title, isSelected, onClick }) => {
   return (
-    <StyledButton id={id} $isSelected={isSelected} onClick={onClick}>
+    <StyledButton $isSelected={isSelected} onClick={onClick}>
       <Title $isSelected={isSelected}>{title}</Title>
     </StyledButton>
   );
