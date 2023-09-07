@@ -8,6 +8,8 @@ import { ChatPage } from '@pages/ChatPage';
 import { AccountPage } from '@pages/AccountPage';
 import { ErrorPage } from '@pages/ErrorPage';
 import { JoinPage } from '@pages/JoinPage';
+import { AddPage } from '@pages/AddPage';
+import { CallbackPage } from '@pages/CallbackPage';
 
 const router = createBrowserRouter([
   {
@@ -43,8 +45,16 @@ const router = createBrowserRouter([
             element: <AccountPage />,
           },
           {
+            path: '/add',
+            element: <AddPage />,
+          },
+          {
             path: '/join',
             element: <JoinPage />,
+          },
+          {
+            path: '/callback',
+            element: <CallbackPage />,
           },
           {
             path: '*',
