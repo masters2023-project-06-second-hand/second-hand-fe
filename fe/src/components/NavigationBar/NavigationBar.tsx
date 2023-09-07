@@ -55,6 +55,7 @@ const Wrapper = styled.div`
   padding: 0 16px;
   background-color: ${({ theme: { color } }) => color.neutralBackground};
   border-top: 0.8px solid ${({ theme: { color } }) => color.neutralBorder};
+  z-index: 1;
 `;
 
 const NavItem = styled.button<{ $isSelected: boolean }>`
