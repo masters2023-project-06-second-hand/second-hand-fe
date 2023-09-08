@@ -77,8 +77,11 @@ const List = styled.ul<{
   font: ${({ theme: { font } }) => font.availableDefault16};
   border-radius: ${({ theme: { radius } }) => radius.medium};
   width: 240px;
+  align-items: flex-start;
 
   li {
+    width: 100%;
+    text-align: left;
     padding: 16px;
     border-bottom: 1px solid ${({ theme: { color } }) => color.neutralBorder};
 
