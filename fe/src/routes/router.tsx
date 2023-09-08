@@ -7,6 +7,7 @@ import { LikePage } from '@pages/LikePage';
 import { ChatPage } from '@pages/ChatPage';
 import { AccountPage } from '@pages/AccountPage';
 import { ErrorPage } from '@pages/ErrorPage';
+import { DetailPage } from '@pages/DetailPage';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
           {
             path: '/account',
             element: <AccountPage />,
+          },
+          {
+            path: '/detail',
+            element: <DetailPage />,
           },
           {
             path: '*',
