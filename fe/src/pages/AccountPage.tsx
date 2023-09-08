@@ -1,3 +1,4 @@
+import { GOOGLE_OAUTH_URL, NAVER_OAUTH_URL } from '@api/constants';
 import { Button } from '@components/Button/Button';
 import { Header } from '@components/Header/Header';
 import { ProfileImgInput } from '@components/ProfileImgInput/ProfileImgInput';
@@ -7,13 +8,13 @@ import { styled } from 'styled-components';
 
 export const AccountPage = () => {
   const [profileImg, setProfileImg] = useState<File>();
-  const isLogin = true;
+  const isLogin = false;
 
   const goNaverLogin = () => {
-    location.href = 'https://www.naver.com';
+    location.href = NAVER_OAUTH_URL;
   };
   const goGoogleLogin = () => {
-    location.href = 'https://www.google.com';
+    location.href = GOOGLE_OAUTH_URL;
   };
 
   const onUploadProfileImg = (e: ChangeEvent<HTMLInputElement>) => {
