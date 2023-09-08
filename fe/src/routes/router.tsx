@@ -7,6 +7,7 @@ import { LikePage } from '@pages/LikePage';
 import { ChatPage } from '@pages/ChatPage';
 import { AccountPage } from '@pages/AccountPage';
 import { ErrorPage } from '@pages/ErrorPage';
+import { DetailPage } from '@pages/DetailPage';
 import { JoinPage } from '@pages/JoinPage';
 import { AddPage } from '@pages/AddPage';
 import { CallbackPage } from '@pages/CallbackPage';
@@ -44,6 +45,9 @@ const router = createBrowserRouter([
             path: '/account',
             element: <AccountPage />,
           },
+          {
+            path: '/detail',
+            element: <DetailPage />,
           {
             path: '/add',
             element: <AddPage />,
