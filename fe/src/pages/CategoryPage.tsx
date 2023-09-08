@@ -39,7 +39,7 @@ export const CategoryPage = () => {
 const Content = styled.ul`
   display: flex;
   height: 796px;
-  padding: 40px;
+  padding: 96px 40px 40px 40px;
   justify-content: center;
   align-items: flex-start;
   align-content: flex-start;
