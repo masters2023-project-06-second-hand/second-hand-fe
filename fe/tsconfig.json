@@ -35,7 +35,10 @@
       "@mocks/*": ["mocks/*"],
       "@api/*": ["api/*"],
       "@react-query/*": ["react-query/*"]
-    }
+    },
+
+    /* jest */
+    "esModuleInterop": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
