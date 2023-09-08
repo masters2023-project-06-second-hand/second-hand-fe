@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   padding: 16px;
   display: flex;
   align-items: center;
-  width: 100%;
+  width: 393px;
   height: 64px;
   background-color: ${({ theme }) => theme.color.neutralBackgroundWeak};
   font: ${({ theme }) => theme.font.displayDefault16};
