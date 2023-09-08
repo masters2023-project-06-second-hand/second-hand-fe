@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { TextButton } from '@components/Button/TextButton';
 import { Icon } from '@components/Icon/Icon';
 import { StateBadge } from '@components/Badge/StateBadge';
 import { formatPrice, displayTimeAgo, displayCount } from '@utils/index';
+import { Dropdown } from '@components/Dropdown/Dropdown';
+import { getDropdownItems } from './getDropdownItem';
 
 type ProductItem = {
   id: number;
@@ -42,8 +43,20 @@ export const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
           </Info>
 
           {isWriter && (
-            <MoreButton onClick={() => {}} size="M">
-              <Icon name="dots" size="M" stroke="neutralTextStrong" />
+            <MoreButton>
+              <Dropdown
+                trigger={
+                  <Icon name="dots" size="M" stroke="neutralTextStrong" />
+                }
+                position="bottom-right"
+              >
+                {getDropdownItems(item.status).map((option) => (
+                  /* Todo. 클릭 시 옵션별 처리 추가하기 */
+                  <li key={option.id} onClick={() => {}}>
+                    {option.name}
+                  </li>
+                ))}
+              </Dropdown>
             </MoreButton>
           )}
         </Top>
@@ -118,9 +131,11 @@ const Price = styled.p`
   font: ${({ theme: { font } }) => font.displayStrong16};
   color: ${({ theme: { color } }) => color.neutralTextStrong};
 `;
-const MoreButton = styled(TextButton)`
+const MoreButton = styled.button`
   align-items: flex-start;
   padding: 0;
+  height: 24px;
+  z-index: 1;
 `;
 const ChatAndLike = styled.div`
   display: flex;
