@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
-import { useNavigate } from 'react-router-dom';
 
 type MenuIcons = 'home' | 'news' | 'heart' | 'message' | 'userCircle';
 
@@ -21,7 +21,12 @@ const MENU_LISTS: MenuItems[] = [
 
 export const NavigationBar = () => {
   const navigate = useNavigate();
-  const [selectedMenu, setSelectedMenu] = useState('home');
+  const location = useLocation();
+
+  const initialMenu =
+    MENU_LISTS.find((menu) => menu.path === location.pathname)?.name || 'home';
+
+  const [selectedMenu, setSelectedMenu] = useState(initialMenu);
 
   const handleNavigation = (menuName: MenuIcons, path: string) => {
     setSelectedMenu(menuName);
