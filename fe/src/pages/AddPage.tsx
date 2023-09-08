@@ -39,7 +39,7 @@ export const AddPage = () => {
       setRecommendCategories(generateRecommendCategory(categories));
     }
     fetchRecommendCategories();
-  }, [category]);
+  }, []);
 
   useEffect(() => {
     if (hasName) return;
