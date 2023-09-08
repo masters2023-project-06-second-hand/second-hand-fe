@@ -163,7 +163,6 @@ export const HomePage = () => {
           </button>
         </Header.Right>
       </Header>
-
       <Content>
         {items.map((item) => (
           <ProductItem item={item} key={item.id} />
@@ -174,10 +173,15 @@ export const HomePage = () => {
 };
 
 const Content = styled.div`
+  padding: 56px 16px 56px 16px;
   overflow-y: scroll;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: start;
   position: relative;
+  -ms-overflow-style: none; /* 인터넷 익스플로러 */
+  scrollbar-width: none; /* 파이어폭스 */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

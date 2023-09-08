@@ -21,8 +21,9 @@ const StyledButton = styled.button<{ $isSelected: boolean }>`
   border-radius: 50px;
   background-color: ${({ theme: { color }, $isSelected }) =>
     $isSelected ? color.accentPrimary : color.accentText};
-  border: ${({ theme: { color }, $isSelected }) =>
-    $isSelected ? 'none' : `1px solid ${color.neutralBorder}`};
+  border: 1px solid
+    ${({ theme: { color }, $isSelected }) =>
+      $isSelected ? color.accentPrimary : color.neutralBorder};
 `;
 
 const Title = styled.span<{ $isSelected: boolean }>`

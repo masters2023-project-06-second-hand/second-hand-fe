@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useEffect } from 'react';
 
 export const CallbackPage = () => {
+  // 백엔드와 테스트중
   useEffect(() => {
     const URL = window.location.href;
     const parts = URL.split('?');

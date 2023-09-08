@@ -28,7 +28,6 @@ const Body = styled.div`
   justify-content: center;
   margin: 0 auto;
   height: 100vh;
-  padding-top: 56px;
   outline: 1px solid ${({ theme: { color } }) => color.neutralBorder};
   position: relative;
 `;
@@ -38,5 +37,4 @@ const Fab = styled.div`
   bottom: 88px;
   width: 100px;
   right: -20px;
-  /* z-index: ; */
 `;
