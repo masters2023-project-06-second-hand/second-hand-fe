@@ -72,7 +72,7 @@ export const HistoryPage = () => {
 
 const Content = styled.div`
   width: 393px;
-  padding: 16px 16px 64px 16px;
+  padding: 72px 16px 64px 16px;
 `;
 
 const Tab = styled.div`
