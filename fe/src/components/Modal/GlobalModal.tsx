@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { useModal, modalStackAtom } from './useModal';
 import { createModalComponent } from './index';
 
-const getZIndex = (index: number) => 1 + index;
+const getZIndex = (index: number) => 10 + index;
 
 export const GlobalModal: React.FC = () => {
   const [modalStack] = useAtom(modalStackAtom);

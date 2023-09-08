@@ -40,7 +40,7 @@ export const Textarea: React.FC<Props> = ({
 };
 
 const StyledTextarea = styled.textarea`
-  padding: 0;
+  padding: 0px 0px 56px 0px;
   width: 100%;
   font: ${({ theme }) => theme.font.availableDefault16};
   color: ${({ theme }) => theme.color.neutralTextStrong};

@@ -40,8 +40,11 @@ const HeaderContainer = styled.header<{ $backgroundColor: string }>`
   align-items: center;
   padding: 8px;
   height: 56px;
-  border-bottom: 1px solid ${({ theme: { color } }) => color.neutralBorder};
+  border-bottom: ${({ theme: { color }, $backgroundColor }) =>
+    $backgroundColor === 'none' ? '' : `1px solid ${color.neutralBorder}`};
   background-color: ${({ theme, $backgroundColor = 'neutralBackgroundBlur' }) =>
     theme.color[$backgroundColor]};
-  backdrop-filter: blur(4px);
+  backdrop-filter: ${({ $backgroundColor }) =>
+    $backgroundColor === 'none' ? '' : 'blur(4px)'};
+  z-index: 1;
 `;
