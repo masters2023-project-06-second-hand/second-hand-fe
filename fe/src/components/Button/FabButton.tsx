@@ -5,9 +5,9 @@ export type ButtonProps = {
   onClick: () => void;
 };
 
-export const FabButton: React.FC<ButtonProps> = () => {
+export const FabButton: React.FC<ButtonProps> = ({ onClick }) => {
   return (
-    <Fab>
+    <Fab onClick={onClick}>
       <Icon name="plus" stroke="accentText" size="M" />
     </Fab>
   );

@@ -17,6 +17,10 @@ export default defineConfig({
       '@contexts': resolve(__dirname, './src/contexts'),
       '@constants': resolve(__dirname, './src/constants'),
       '@test': resolve(__dirname, './src/test'),
+      '@routes': resolve(__dirname, './src/routes'),
+      '@mocks': resolve(__dirname, './src/mocks'),
+      '@api': resolve(__dirname, './src/api'),
+      '@react-query': resolve(__dirname, './src/react-query'),
     },
   },
 });

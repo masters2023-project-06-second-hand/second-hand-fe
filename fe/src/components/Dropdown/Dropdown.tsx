@@ -17,12 +17,14 @@ export const Dropdown: React.FC<DropdownProps> = ({
 
   return (
     <Wrapper ref={dropdownRef}>
-      {isOpen && <Overlay onClick={toggleDropdown}></Overlay>}
       <Trigger onClick={toggleDropdown}>{trigger}</Trigger>
       {isOpen && (
-        <List $position={position} onClick={toggleDropdown}>
-          {children}
-        </List>
+        <>
+          <Overlay onClick={toggleDropdown} />
+          <List $position={position} onClick={toggleDropdown}>
+            {children}
+          </List>
+        </>
       )}
     </Wrapper>
   );
@@ -32,8 +34,8 @@ const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
+  width: 100%;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.2);
 `;
 
@@ -75,8 +77,11 @@ const List = styled.ul<{
   font: ${({ theme: { font } }) => font.availableDefault16};
   border-radius: ${({ theme: { radius } }) => radius.medium};
   width: 240px;
+  align-items: flex-start;
 
   li {
+    width: 100%;
+    text-align: left;
     padding: 16px;
     border-bottom: 1px solid ${({ theme: { color } }) => color.neutralBorder};
 

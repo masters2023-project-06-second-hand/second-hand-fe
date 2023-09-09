@@ -1,3 +1,5 @@
+import { Categories } from '@api/category/types';
+import { useCategoriesWithoutImages } from '@api/category/useCategories';
 import { ActionBar } from '@components/ActionBar/ActionBar';
 import { EditBar } from '@components/ActionBar/EditBar';
 import { AddImgInput } from '@components/AddImgInput/AddImgInput';
@@ -6,20 +8,48 @@ import { Header } from '@components/Header/Header';
 import { Input } from '@components/Input/Input';
 import { PriceInput } from '@components/Input/PriceInput';
 import { PictureItem } from '@components/PictureItem/PictureItem';
+import { Tag } from '@components/Tag/Tag';
 import { Textarea } from '@components/Textarea/Textarea';
 import { MAX_IMAGE_SIZE } from '@constants/constants';
 import { useInput } from '@hooks/useInput';
 import { usePrice } from '@hooks/usePrice';
-import React, { ChangeEvent, useState } from 'react';
+import generateRecommendCategory from '@utils/generateRecommendCategory';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const AddPage = () => {
+  const navigate = useNavigate();
+  const category = useCategoriesWithoutImages();
   const [imgFiles, setImgFiles] = useState<File[]>([]);
   const [productImgs, setProductImgs] = useState<string[]>([]);
   const { value: name, onChange: onChangeName } = useInput();
-  const { value: price, onChange: onChangePrice } = usePrice();
   const { value: content, onChange: onChangeContent } = useInput();
+  const { value: price, onChange: onChangePrice } = usePrice();
+  const [selectedCategory, setSelectedCategory] = useState<number>();
+  const [recommendCategories, setRecommendCategories] =
+    useState<Categories[]>();
   const isAllRequired = imgFiles.length === 0 || name === '' || content === '';
+  const hasName = name.length !== 0;
+
+  // To do: 카테로그 추천 로직 변경
+  useEffect(() => {
+    async function fetchRecommendCategories() {
+      const categories = await category;
+      setRecommendCategories(generateRecommendCategory(categories));
+    }
+    fetchRecommendCategories();
+  }, []);
+
+  useEffect(() => {
+    if (hasName) return;
+    setRecommendCategories(generateRecommendCategory(category));
+    setSelectedCategory(undefined);
+  }, [hasName]);
+
+  const goHomePage = () => {
+    navigate('/');
+  };
 
   const onUploadImg = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -29,6 +59,7 @@ export const AddPage = () => {
       setProductImgs([...productImgs, URL.createObjectURL(file)]);
     }
   };
+
   const deleteImg = (e: React.MouseEvent<HTMLButtonElement>) => {
     const imgId = e.currentTarget.id;
     setImgFiles(imgFiles.filter((_, idx) => idx.toString() !== imgId));
@@ -36,10 +67,14 @@ export const AddPage = () => {
   };
 
   return (
-    <Page>
+    <>
       <Header backgroundColor="neutralBackgroundWeak">
         <Header.Left>
-          <TextButton size="M" textColor="neutralTextStrong">
+          <TextButton
+            size="M"
+            textColor="neutralTextStrong"
+            onClick={goHomePage}
+          >
             닫기
           </TextButton>
         </Header.Left>
@@ -50,75 +85,74 @@ export const AddPage = () => {
           </TextButton>
         </Header.Right>
       </Header>
-      <ContentsWrapper>
-        <Contents>
-          <ImgSection>
-            <ScrollWrapper>
-              <ImgScroll>
-                <AddImgInput
-                  numberOfImg={productImgs.length}
-                  onChange={onUploadImg}
+      <Contents>
+        <ImgSection>
+          <ScrollWrapper>
+            <ImgScroll>
+              <AddImgInput
+                numberOfImg={productImgs.length}
+                onChange={onUploadImg}
+              />
+              {productImgs.map((productImg, index) => (
+                <PictureItem
+                  key={index}
+                  id={index}
+                  isThumbnail={index === 0}
+                  imgUrl={productImg}
+                  deleteImg={deleteImg}
                 />
-                {productImgs.map((productImg, index) => (
-                  <PictureItem
-                    key={index}
-                    id={index}
-                    isThumbnail={index === 0 ? true : false}
-                    imgUrl={productImg}
-                    deleteImg={deleteImg}
-                  />
-                ))}
-              </ImgScroll>
-            </ScrollWrapper>
-          </ImgSection>
-          <NameSection>
+              ))}
+            </ImgScroll>
+          </ScrollWrapper>
+        </ImgSection>
+        <NameSection>
+          <div>
             <Input value={name} onChange={onChangeName} />
-          </NameSection>
-          <PriceSection>
-            <PriceInput
-              currencyUnit="won"
-              value={price}
-              onChange={onChangePrice}
-            />
-          </PriceSection>
-          <ContentSection>
-            <Textarea
-              placeholder="역삼 1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)"
-              value={content}
-              onChange={onChangeContent}
-            />
-          </ContentSection>
-        </Contents>
-      </ContentsWrapper>
+          </div>
+          {hasName && (
+            <RecommendCategories>
+              {recommendCategories?.map((tag) => (
+                <Tag
+                  key={tag.id}
+                  title={tag.name}
+                  isSelected={selectedCategory === tag.id}
+                  onClick={() => setSelectedCategory(tag.id)}
+                />
+              ))}
+            </RecommendCategories>
+          )}
+        </NameSection>
+        <PriceSection>
+          <PriceInput
+            currencyUnit="won"
+            value={price}
+            onChange={onChangePrice}
+          />
+        </PriceSection>
+        <ContentSection>
+          <Textarea
+            placeholder="역삼 1동에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)"
+            value={content}
+            onChange={onChangeContent}
+          />
+        </ContentSection>
+      </Contents>
       <ActionBar>
         <EditBar regionName="역삼1동" />
       </ActionBar>
-    </Page>
+    </>
   );
 };
 
-const Page = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-`;
-
-const ContentsWrapper = styled.div`
-  margin: 56px 0px 70px 0px;
-  display: flex;
-  flex-grow: 1;
-  overflow-y: hidden;
-`;
-
 const Contents = styled.div`
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  padding: 72px 16px 16px 16px;
+  overflow-y: auto;
   width: 100%;
   height: 100%;
-  overflow-y: auto;
+  display: flex;
+  gap: 16px;
+  flex-direction: column;
+  justify-content: start;
   section:not(:last-child)::after {
     position: absolute;
     left: 0px;
@@ -145,6 +179,12 @@ const NameSection = styled(Section)``;
 const PriceSection = styled(Section)``;
 
 const ContentSection = styled(Section)``;
+
+const RecommendCategories = styled.div`
+  padding-top: 16px;
+  display: flex;
+  gap: 4px;
+`;
 
 const ScrollWrapper = styled.div`
   width: 100%;

@@ -31,8 +31,14 @@
       "@contexts/*": ["contexts/*"],
       "@constants/*": ["constants/*"],
       "@test/*": ["test/*"],
-      "@routes": ["routes/*"]
-    }
+      "@routes/*": ["routes/*"],
+      "@mocks/*": ["mocks/*"],
+      "@api/*": ["api/*"],
+      "@react-query/*": ["react-query/*"]
+    },
+
+    /* jest */
+    "esModuleInterop": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -3,7 +3,7 @@ import { Input } from './Input';
 import React from 'react';
 
 type Props = {
-  currencyUnit: 'won' | 'dollar';
+  currencyUnit: keyof typeof unit;
   placeholder?: string;
   value: string;
   onChange(e: React.ChangeEvent<HTMLInputElement>): void;
