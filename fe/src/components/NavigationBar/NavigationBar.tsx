@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
+import { PATH } from '@constants/path';
 
 type MenuIcons = 'home' | 'news' | 'heart' | 'message' | 'userCircle';
 
@@ -12,11 +13,11 @@ interface MenuItems {
 }
 
 const MENU_LISTS: MenuItems[] = [
-  { name: 'home', label: '홈화면', path: '' },
-  { name: 'news', label: '판매내역', path: '/history' },
-  { name: 'heart', label: '관심상품', path: '/liked' },
-  { name: 'message', label: '채팅', path: '/chat' },
-  { name: 'userCircle', label: '내 계정', path: '/account' },
+  { name: 'home', label: '홈화면', path: PATH.HOME },
+  { name: 'news', label: '판매내역', path: PATH.HISTORY },
+  { name: 'heart', label: '관심상품', path: PATH.LIKED },
+  { name: 'message', label: '채팅', path: PATH.CHAT },
+  { name: 'userCircle', label: '내 계정', path: PATH.ACCOUNT },
 ];
 
 export const NavigationBar = () => {
