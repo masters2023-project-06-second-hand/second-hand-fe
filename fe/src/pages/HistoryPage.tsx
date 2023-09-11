@@ -4,7 +4,8 @@ import { Header } from '@components/Header/Header';
 import { Tag } from '@components/Tag/Tag';
 import { ProductItem } from '@components/Item/ProductItem';
 
-const data = ['전체', '판매중', '판매완료'];
+type ProductStatus = '전체' | '판매중' | '판매완료';
+const data: ProductStatus[] = ['전체', '판매중', '판매완료'];
 
 const items = [
   {
@@ -34,7 +35,7 @@ const items = [
 ];
 
 export const HistoryPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+  const [selectedStatus, setSelectedStatus] = useState<ProductStatus>('전체');
 
   return (
     <>
@@ -52,8 +53,8 @@ export const HistoryPage = () => {
                 <Tag
                   key={state}
                   title={state}
-                  isSelected={selectedCategory === state}
-                  onClick={() => setSelectedCategory(state)}
+                  isSelected={selectedStatus === state}
+                  onClick={() => setSelectedStatus(state)}
                 />
               ))}
             </Tab>

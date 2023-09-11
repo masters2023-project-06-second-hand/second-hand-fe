@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { Header } from '@components/Header/Header';
 import { TextButton } from '@components/Button/TextButton';
 import { Icon } from '@components/Icon/Icon';
 import { RegionDropdown } from '@components/Dropdown/ReigonDropdown';
 import { ProductItem } from '@components/Item/ProductItem';
+import { FabButton } from '@components/Button/FabButton';
+import { usePageNavigator } from '@hooks/usePageNavigator';
 
 const userRegion = {
   selectedRegionId: 1,
@@ -121,7 +122,7 @@ const items = [
 ];
 
 export const HomePage = () => {
-  const navigate = useNavigate();
+  const { navigateToCategory } = usePageNavigator();
 
   const { selectedRegionId, regions } = userRegion;
 
@@ -157,17 +158,22 @@ export const HomePage = () => {
             style={{
               padding: '8px',
             }}
-            onClick={() => navigate('/category')}
+            onClick={navigateToCategory}
           >
             <Icon name="layoutGrid" size="M" stroke="neutralTextStrong" />
           </button>
         </Header.Right>
       </Header>
+
       <Content>
         {items.map((item) => (
           <ProductItem item={item} key={item.id} />
         ))}
       </Content>
+
+      <AddPageButtonWrapper>
+        <FabButton />
+      </AddPageButtonWrapper>
     </>
   );
 };
@@ -179,9 +185,15 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
-  -ms-overflow-style: none; /* 인터넷 익스플로러 */
-  scrollbar-width: none; /* 파이어폭스 */
+  scrollbar-width: none;
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const AddPageButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 88px;
+  width: 100px;
+  right: -20px;
 `;

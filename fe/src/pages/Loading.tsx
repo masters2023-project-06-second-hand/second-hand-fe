@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import { styled } from 'styled-components';
 
 export const Loading = () => {
   return (
     <>
-      <Spinner></Spinner>
+      <Spinner />
     </>
   );
 };
@@ -19,7 +19,7 @@ const Spinner = styled.span`
   transform: translate(-50%, -50%);
   animation: rotate 1s linear infinite;
   &::before {
-    content: "";
+    content: '';
     box-sizing: border-box;
     position: absolute;
     inset: 0px;

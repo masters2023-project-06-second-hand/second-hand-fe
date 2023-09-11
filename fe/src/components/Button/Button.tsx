@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import React, { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes } from 'react';
+import { styled } from 'styled-components';
 import { Icon, icons } from '@components/Icon/Icon';
 
 /* 분리하기 */

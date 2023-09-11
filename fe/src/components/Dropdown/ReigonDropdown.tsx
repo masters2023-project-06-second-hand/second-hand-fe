@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
-import { Dropdown } from './Dropdown';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { useModal } from '@components/Modal/useModal';
+import { Dropdown } from './Dropdown';
 
 type Regions = {
   id: number;

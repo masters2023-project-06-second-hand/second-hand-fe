@@ -1,3 +1,4 @@
+import { styled } from 'styled-components';
 import { ActionBar } from '@components/ActionBar/ActionBar';
 import { EditBar } from '@components/ActionBar/EditBar';
 import { PostBar } from '@components/ActionBar/PostBar';
@@ -6,12 +7,11 @@ import { Header } from '@components/Header/Header';
 import { Icon } from '@components/Icon/Icon';
 import { SellerInfo } from '@components/SellerInfo/SellerInfo';
 import { States } from '@components/States/States';
+import { usePageNavigator } from '@hooks/usePageNavigator';
 import displayTimeAgo from '@utils/displayTimeAgo';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
 
 export const DetailPage = () => {
-  const navigate = useNavigate();
+  const { navigateToGoBack } = usePageNavigator();
   const isWriter = false;
   const data = {
     id: 1,
@@ -56,15 +56,15 @@ export const DetailPage = () => {
     isLiked: true,
   };
 
-  const goHomePage = () => {
-    navigate('/');
-  };
-
   return (
     <>
       <Header backgroundColor="none">
         <Header.Left>
-          <TextButton size="M" textColor="accentText" onClick={goHomePage}>
+          <TextButton
+            size="M"
+            textColor="accentText"
+            onClick={navigateToGoBack}
+          >
             <Icon name="chevronLeft" size="M" stroke="accentText" />
             뒤로
           </TextButton>

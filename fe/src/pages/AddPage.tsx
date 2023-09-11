@@ -1,5 +1,5 @@
-import { Categories } from '@api/category/types';
-import { useCategoriesWithoutImages } from '@api/category/useCategories';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { styled } from 'styled-components';
 import { ActionBar } from '@components/ActionBar/ActionBar';
 import { EditBar } from '@components/ActionBar/EditBar';
 import { AddImgInput } from '@components/AddImgInput/AddImgInput';
@@ -10,16 +10,16 @@ import { PriceInput } from '@components/Input/PriceInput';
 import { PictureItem } from '@components/PictureItem/PictureItem';
 import { Tag } from '@components/Tag/Tag';
 import { Textarea } from '@components/Textarea/Textarea';
-import { MAX_IMAGE_SIZE } from '@constants/constants';
 import { useInput } from '@hooks/useInput';
 import { usePrice } from '@hooks/usePrice';
+import { usePageNavigator } from '@hooks/usePageNavigator';
+import { Categories } from '@api/category/types';
+import { useCategoriesWithoutImages } from '@api/category/useCategories';
+import { MAX_IMAGE_SIZE } from '@constants/constants';
 import generateRecommendCategory from '@utils/generateRecommendCategory';
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
 
 export const AddPage = () => {
-  const navigate = useNavigate();
+  const { navigateToGoBack } = usePageNavigator();
   const category = useCategoriesWithoutImages();
   const [imgFiles, setImgFiles] = useState<File[]>([]);
   const [productImgs, setProductImgs] = useState<string[]>([]);
@@ -47,10 +47,6 @@ export const AddPage = () => {
     setSelectedCategory(undefined);
   }, [hasName]);
 
-  const goHomePage = () => {
-    navigate('/');
-  };
-
   const onUploadImg = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -73,7 +69,7 @@ export const AddPage = () => {
           <TextButton
             size="M"
             textColor="neutralTextStrong"
-            onClick={goHomePage}
+            onClick={navigateToGoBack}
           >
             닫기
           </TextButton>

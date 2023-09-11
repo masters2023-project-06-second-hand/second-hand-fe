@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
+import { styled } from 'styled-components';
 import { Header } from '@components/Header/Header';
 import { TextButton } from '@components/Button/TextButton';
 import { Icon } from '@components/Icon/Icon';
 import { useCategoriesWithImages } from '@api/category/useCategories';
+import { usePageNavigator } from '@hooks/usePageNavigator';
 
 export const CategoryPage = () => {
-  const navigate = useNavigate();
+  const { navigateToGoBack } = usePageNavigator();
   const categories = useCategoriesWithImages();
 
   return (
@@ -16,7 +16,7 @@ export const CategoryPage = () => {
           <TextButton
             size="M"
             textColor="neutralTextStrong"
-            onClick={() => navigate(-1)}
+            onClick={navigateToGoBack}
           >
             <Icon name="chevronLeft" size="M" stroke="neutralTextStrong" />
             뒤로
