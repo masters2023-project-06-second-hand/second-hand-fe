@@ -1,7 +1,6 @@
 import { styled } from 'styled-components';
 import { NavigationBar } from '@components/NavigationBar/NavigationBar';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { FabButton } from '@components/Button/FabButton';
 
 export const Layout = () => {
   const navigate = useNavigate();
@@ -12,12 +11,6 @@ export const Layout = () => {
     <Body>
       {hasNavigationBarPath.includes(location.pathname) && <NavigationBar />}
       <Outlet />
-
-      {location.pathname === '/' && (
-        <Fab>
-          <FabButton onClick={() => navigate('/add')} />
-        </Fab>
-      )}
     </Body>
   );
 };
@@ -30,11 +23,4 @@ const Body = styled.div`
   height: 100vh;
   outline: 1px solid ${({ theme: { color } }) => color.neutralBorder};
   position: relative;
-`;
-
-const Fab = styled.div`
-  position: absolute;
-  bottom: 88px;
-  width: 100px;
-  right: -20px;
 `;
