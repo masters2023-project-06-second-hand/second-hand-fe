@@ -1,10 +1,10 @@
-import { GOOGLE_OAUTH_URL, NAVER_OAUTH_URL } from '@api/constants';
+import { ChangeEvent, useState } from 'react';
+import { styled } from 'styled-components';
 import { Button } from '@components/Button/Button';
 import { Header } from '@components/Header/Header';
 import { ProfileImgInput } from '@components/ProfileImgInput/ProfileImgInput';
+import { GOOGLE_OAUTH_URL, NAVER_OAUTH_URL } from '@api/constants';
 import { MAX_IMAGE_SIZE } from '@constants/constants';
-import { ChangeEvent, useState } from 'react';
-import { styled } from 'styled-components';
 
 export const AccountPage = () => {
   const [profileImg, setProfileImg] = useState<File>();

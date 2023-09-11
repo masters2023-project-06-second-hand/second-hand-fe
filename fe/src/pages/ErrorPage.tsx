@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { TextButton } from '@components/Button/TextButton';
 import { useNavigate } from 'react-router-dom';
 

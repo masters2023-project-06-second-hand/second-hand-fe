@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import React, { ButtonHTMLAttributes } from 'react';
+import { styled } from 'styled-components';
+import { ButtonHTMLAttributes } from 'react';
 
 export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   textColor?: string;

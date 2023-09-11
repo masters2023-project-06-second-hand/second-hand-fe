@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { StateBadge } from '@components/Badge/StateBadge';
-import { formatPrice, displayTimeAgo, displayCount } from '@utils/index';
 import { Dropdown } from '@components/Dropdown/Dropdown';
+import { formatPrice, displayTimeAgo, displayCount } from '@utils/index';
 import { getDropdownItems } from './getDropdownItem';
 
 type ProductItem = {

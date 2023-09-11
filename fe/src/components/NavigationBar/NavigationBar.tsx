@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 
 type MenuIcons = 'home' | 'news' | 'heart' | 'message' | 'userCircle';

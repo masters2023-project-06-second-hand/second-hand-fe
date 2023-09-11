@@ -1,3 +1,4 @@
+import { styled } from 'styled-components';
 import { ActionBar } from '@components/ActionBar/ActionBar';
 import { EditBar } from '@components/ActionBar/EditBar';
 import { PostBar } from '@components/ActionBar/PostBar';

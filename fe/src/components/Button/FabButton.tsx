@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 
 export type ButtonProps = {

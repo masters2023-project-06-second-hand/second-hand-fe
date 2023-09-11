@@ -1,6 +1,6 @@
-import { Icon } from '@components/Icon/Icon';
 import { ChangeEvent } from 'react';
 import { styled } from 'styled-components';
+import { Icon } from '@components/Icon/Icon';
 
 type Props = {
   imgUrl: string;

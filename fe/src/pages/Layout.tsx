@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { NavigationBar } from '@components/NavigationBar/NavigationBar';
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { FabButton } from '@components/Button/FabButton';

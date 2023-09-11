@@ -1,9 +1,9 @@
-import React from 'react';
+import { Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import styled from 'styled-components';
-import { useAtom } from 'jotai';
+import { styled } from 'styled-components';
 import { useModal, modalStackAtom } from './useModal';
 import { createModalComponent } from './index';
+import { useAtom } from 'jotai';
 
 const getZIndex = (index: number) => 10 + index;
 
@@ -23,7 +23,7 @@ export const GlobalModal: React.FC = () => {
     <>
       {modalStack.map((modalState, index) => {
         return (
-          <React.Fragment key={index}>
+          <Fragment key={index}>
             {index === lastModalIndex && (
               <Overlay
                 onClick={closeModal}
@@ -34,7 +34,7 @@ export const GlobalModal: React.FC = () => {
               ...modalState.props,
               style: { zIndex: getZIndex(index) },
             })}
-          </React.Fragment>
+          </Fragment>
         );
       })}
     </>,
