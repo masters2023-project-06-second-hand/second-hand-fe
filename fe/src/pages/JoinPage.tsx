@@ -1,22 +1,18 @@
+import { ChangeEvent, useState } from 'react';
+import { styled } from 'styled-components';
 import { Button } from '@components/Button/Button';
 import { TextButton } from '@components/Button/TextButton';
 import { Header } from '@components/Header/Header';
 import { LabelInput } from '@components/Input/LabelInput';
 import { ProfileImgInput } from '@components/ProfileImgInput/ProfileImgInput';
-import { MAX_IMAGE_SIZE } from '@constants/constants';
 import { useInput } from '@hooks/useInput';
-import { ChangeEvent, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { usePageNavigator } from '@hooks/usePageNavigator';
+import { MAX_IMAGE_SIZE } from '@constants/constants';
 
 export const JoinPage = () => {
-  const navigate = useNavigate();
   const [profileImg, setProfileImg] = useState<File>();
+  const { navigateToAccount } = usePageNavigator();
   const { value: nickname, onChange } = useInput();
-
-  const goAccountPage = () => {
-    navigate('/account');
-  };
 
   const onUploadProfileImg = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -33,7 +29,7 @@ export const JoinPage = () => {
           <TextButton
             size="M"
             textColor="neutralTextStrong"
-            onClick={goAccountPage}
+            onClick={navigateToAccount}
           >
             닫기
           </TextButton>
