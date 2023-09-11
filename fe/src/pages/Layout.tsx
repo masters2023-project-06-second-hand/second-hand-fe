@@ -1,15 +1,11 @@
 import { styled } from 'styled-components';
 import { NavigationBar } from '@components/NavigationBar/NavigationBar';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 export const Layout = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const hasNavigationBarPath = ['/', '/history', '/liked', '/chat', '/account'];
-
   return (
     <Body>
-      {hasNavigationBarPath.includes(location.pathname) && <NavigationBar />}
+      <NavigationBar />
       <Outlet />
     </Body>
   );

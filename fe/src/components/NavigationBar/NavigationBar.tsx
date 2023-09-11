@@ -20,6 +20,8 @@ const MENU_LISTS: MenuItems[] = [
   { name: 'userCircle', label: '내 계정', path: PATH.ACCOUNT },
 ];
 
+const NAVIGATION_BAR_PATHS = MENU_LISTS.map((menu) => menu.path);
+
 export const NavigationBar = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -28,6 +30,10 @@ export const NavigationBar = () => {
     MENU_LISTS.find((menu) => menu.path === location.pathname)?.name || 'home';
 
   const [selectedMenu, setSelectedMenu] = useState(initialMenu);
+
+  if (!NAVIGATION_BAR_PATHS.includes(location.pathname)) {
+    return null;
+  }
 
   const handleNavigation = (menuName: MenuIcons, path: string) => {
     setSelectedMenu(menuName);
