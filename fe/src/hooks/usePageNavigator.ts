@@ -16,6 +16,6 @@ export const usePageNavigator = () => {
     navigateToJoin: () => navigate(PATH.JOIN),
     navigateToCallback: () => navigate(PATH.CALLBACK),
     navigateToError: () => navigate(PATH.FALLBACK),
-    navigateToGoBack: () => navigate(PATH.GoBack),
+    navigateToGoBack: () => navigate(PATH.GOBACK),
   };
 };

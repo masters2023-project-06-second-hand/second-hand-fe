@@ -10,5 +10,5 @@ export const PATH = {
   JOIN: '/join',
   CALLBACK: '/callback',
   FALLBACK: '*',
-  GoBack: -1,
+  GOBACK: -1,
 };
