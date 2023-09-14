@@ -8,7 +8,7 @@ export const PATH = {
   DETAIL: '/detail',
   ADD: '/add',
   JOIN: '/join',
-  CALLBACK: '/callback',
+  CALLBACK: '/callback/:provider',
   FALLBACK: '*',
   GOBACK: -1,
 };
