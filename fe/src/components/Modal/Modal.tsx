@@ -1,54 +1,10 @@
 import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { useModal } from './useModal';
-import {
-  SearchRegionModalProps,
-  CategotyModalProps,
-  AlertModalProps,
-} from './types';
+
+import { CategotyModalProps, AlertModalProps } from './types';
 
 /* Todo. 모달들 파일 분리하기 */
-
-export const SearchRegionModal: React.FC<SearchRegionModalProps> = ({
-  style,
-}) => {
-  const { closeModal, closeAllModals } = useModal();
-
-  return (
-    <ModalBase style={style}>
-      <SearchHeader>
-        <ButtonBase onClick={closeModal}>
-          <Icon name="chevronLeft" />
-        </ButtonBase>
-        <ButtonBase onClick={closeAllModals}>
-          <Icon name="x" />
-        </ButtonBase>
-      </SearchHeader>
-
-      {/* Todo. Input 컴포넌트 데려와서 적용하기 */}
-      <SearchInputArea>임시 텍스트 영역</SearchInputArea>
-
-      {/* Todo. 지역 검색 리스트 추가하기 */}
-      <List>
-        <Option>서울 강남구 개포1동</Option>
-        <Option>서울 강남구 개포2동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-        <Option>서울 강남구 개포3동</Option>
-      </List>
-    </ModalBase>
-  );
-};
 
 export const CategoryModal: React.FC<CategotyModalProps> = ({ style }) => {
   const { closeModal } = useModal();
@@ -121,15 +77,6 @@ const Header = styled.div`
   color: ${({ theme: { color } }) => color.neutralTextStrong};
 `;
 
-const SearchHeader = styled.div`
-  padding: 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font: ${({ theme: { font } }) => font.displayStrong20};
-  color: ${({ theme: { color } }) => color.neutralTextStrong};
-`;
-
 const AlertWrapper = styled.div`
   position: fixed;
   top: 50%;
@@ -160,24 +107,20 @@ const Action = styled.div`
     font: ${({ theme: { font } }) => font.displayStrong16};
   }
 `;
-const SearchInputArea = styled.div`
-  padding: 0 16px;
-  background-color: #eee;
-  width: 288px;
-  height: 40px;
-  line-height: 40px;
-  margin: 0 auto;
-`;
+
 const List = styled.ul`
   font: ${({ theme: { font } }) => font.availableDefault16};
   padding: 0 24px;
   overflow-y: scroll;
   height: 100%;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const Option = styled.li`
   padding: 16px 0;
   border-bottom: 1px solid ${({ theme: { color } }) => color.neutralBorder};
-
   &:last-child {
     border-bottom: none;
   }
