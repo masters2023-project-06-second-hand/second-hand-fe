@@ -15,13 +15,14 @@ interface Region {
 export const userInfoAtom = atom<UserInfo>(null);
 
 type UserRegions = {
-  currentRegion: string;
+  selectedRegion: { id: number; name: string };
   regions: Region[];
-  selectedRegionId: number;
 };
 
 export const userRegionsAtom = atom<UserRegions>({
-  currentRegion: DEFAULT_REGIONS.currentRegion,
+  selectedRegion: {
+    id: DEFAULT_REGIONS.selectedRegionId,
+    name: DEFAULT_REGIONS.currentRegion,
+  },
   regions: DEFAULT_REGIONS.regions,
-  selectedRegionId: DEFAULT_REGIONS.selectedRegionId,
 });

@@ -46,7 +46,7 @@ export const RegionSettingModal: React.FC<RegionSettingModalProps> = ({
           {userRegions.regions.map((region) => (
             <Item
               key={region.id}
-              $isSelected={userRegions.selectedRegionId === region.id}
+              $isSelected={userRegions.selectedRegion.id === region.id}
               onClick={() => handleSelectedRegion(region.id)}
             >
               <p>{region.name}</p>

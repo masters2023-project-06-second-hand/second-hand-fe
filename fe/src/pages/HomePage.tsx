@@ -118,7 +118,6 @@ export const HomePage = () => {
 
   const setUserRegion = useSetUserRegionMutation();
   const [userRegions] = useAtom(userRegionsAtom);
-  console.log(userRegions);
 
   const handleSelectRegion = (id: number) => {
     setUserRegion(id);
@@ -131,12 +130,12 @@ export const HomePage = () => {
           <RegionDropdown
             trigger={
               <TextButton size="M" textColor="neutralTextStrong">
-                {userRegions.currentRegion}
+                {userRegions.selectedRegion.name}
                 <Icon name="chevronDown" size="M" stroke="neutralTextStrong" />
               </TextButton>
             }
             myRegions={userRegions.regions}
-            selectedRegionId={userRegions.selectedRegionId}
+            selectedRegionId={userRegions.selectedRegion.id}
             onSelectRegion={handleSelectRegion}
           />
         </Header.Left>

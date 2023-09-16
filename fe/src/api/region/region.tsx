@@ -51,14 +51,16 @@ export const useGetUserReigions = (): void => {
     {
       enabled: !!userInfo,
       onSuccess: (data) => {
-        const currentRegion = data.regions.find(
+        const selectedRegion = data.regions.find(
           (r) => r.id === data.selectedRegionId
-        )!.name;
+        );
+        if (!selectedRegion) {
+          throw new Error('Selected region not found');
+        }
 
         setUserRegions({
-          currentRegion,
+          selectedRegion,
           regions: data.regions,
-          selectedRegionId: data.selectedRegionId,
         });
       },
     }
