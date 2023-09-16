@@ -21,8 +21,8 @@ type UserRegions = {
 
 export const userRegionsAtom = atom<UserRegions>({
   selectedRegion: {
-    id: DEFAULT_REGIONS.selectedRegionId,
-    name: DEFAULT_REGIONS.currentRegion,
+    id: DEFAULT_REGIONS.id,
+    name: DEFAULT_REGIONS.name,
   },
-  regions: DEFAULT_REGIONS.regions,
+  regions: [DEFAULT_REGIONS],
 });
