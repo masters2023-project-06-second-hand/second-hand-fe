@@ -3,11 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useAtom } from 'jotai';
 import { usePageNavigator } from '@hooks/usePageNavigator';
-import { signupTokenAtom } from '@atoms/userAtom';
+import { signupTokenAtom } from '@atoms/loginAtom';
 import { fetchLogin, useHandleLogin } from '@api/auth/login';
 import { extractQueryString } from '@utils/index';
 
-/* CallbackPage가 처음에 두번 렌더링 되는데 이유를 모르겠네요 */
 export const CallbackPage = () => {
   const { provider } = useParams();
 

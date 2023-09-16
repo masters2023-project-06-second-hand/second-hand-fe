@@ -3,10 +3,7 @@ import { styled } from 'styled-components';
 import { Button } from '@components/Button/Button';
 import { Header } from '@components/Header/Header';
 import { ProfileImgInput } from '@components/ProfileImgInput/ProfileImgInput';
-import {
-  GOOGLE_LOGIN_BUTTON_URL,
-  NAVER_LOGIN_BUTTON_URL,
-} from '@api/constants';
+import { GOOGLE_LOGIN_BUTTON_URL, NAVER_LOGIN_BUTTON_URL } from '../envConfig';
 import { MAX_IMAGE_SIZE } from '@constants/constants';
 import { isLoginAtom } from '@atoms/loginAtom';
 import { useAtom } from 'jotai';

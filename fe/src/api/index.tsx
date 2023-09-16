@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { BASE_API_URL } from './constants';
-
+import { BASE_API_URL } from '../envConfig';
 export const publicApi = axios.create({
   baseURL: `${BASE_API_URL}/api/`,
   headers: {

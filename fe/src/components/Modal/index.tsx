@@ -7,12 +7,9 @@ import {
   ModalPropsMapping,
 } from './types';
 
-import {
-  RegionSettingModal,
-  SearchRegionModal,
-  CategoryModal,
-  AlertModal,
-} from './Modal';
+import { SearchRegionModal, CategoryModal, AlertModal } from './Modal';
+
+import { RegionSettingModal } from '@components/Modal/RegionSettingModal';
 
 export function createModalComponent<T extends ModalType>(
   type: T,
