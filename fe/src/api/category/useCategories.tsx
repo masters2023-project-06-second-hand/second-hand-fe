@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { publicApi } from '../index';
 import { CategoriesWithImg, Categories } from './types';
-import { API_ENDPOINTS } from '../constants';
+import { API_ENDPOINTS } from '../../constants/endpoints';
 import { QUERY_KEYS } from '@api/queryKey';
 
 const getCategories = async (includeImages: boolean) => {

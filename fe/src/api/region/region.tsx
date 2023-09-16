@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAtom } from 'jotai';
 import { userInfoAtom, userRegionsAtom } from '@atoms/userAtom';
 import { privateApi } from '../index';
-import { API_ENDPOINTS } from '../../constants/endpoints';
+import { API_ENDPOINTS } from '@constants/endpoints';
 import { QUERY_KEYS } from '@api/queryKey';
 
 /* TODO. 코드 분리 하자 */
