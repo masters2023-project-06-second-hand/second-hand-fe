@@ -37,12 +37,6 @@ export const fetchSignup = async (body: SignupBody, signupToken: string) => {
   return data;
 };
 
-export const fetchUserInfo = async (memberId: number) => {
-  const { data } = await privateApi.get(`${API_ENDPOINTS.USER_INFO(memberId)}`);
-
-  return data;
-};
-
 export const useHandleLogout = () => {
   const [, setUserInfo] = useAtom(userInfoAtom);
   const [, setIsLogin] = useAtom(isLoginAtom);
