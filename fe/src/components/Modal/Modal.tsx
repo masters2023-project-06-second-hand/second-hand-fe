@@ -1,78 +1,13 @@
 import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
-import { Button } from '@components/Button/Button';
-
 import { useModal } from './useModal';
-
 import {
-  RegionSettingModalProps,
   SearchRegionModalProps,
   CategotyModalProps,
   AlertModalProps,
 } from './types';
 
 /* Todo. 모달들 파일 분리하기 */
-export const RegionSettingModal: React.FC<RegionSettingModalProps> = ({
-  style,
-}) => {
-  const { openModal, closeModal } = useModal();
-
-  const openConfirmAlert = (regionName: string) => {
-    openModal('alert', {
-      message: `${regionName}을(를) 삭제하시겠습니까?`,
-      leftButtonText: '취소',
-      rightButtonText: '삭제',
-      onDelete: () => {
-        console.log(`${regionName} deleted!`);
-      },
-    });
-  };
-
-  const myRegions = [
-    {
-      id: 1,
-      name: '주소1',
-    },
-    {
-      id: 2,
-      name: '주소2',
-    },
-  ];
-
-  return (
-    <ModalBase style={style}>
-      <Header>
-        <h3>동네설정</h3>
-        <ButtonBase onClick={closeModal}>
-          <Icon name="x" />
-        </ButtonBase>
-      </Header>
-      <Content>
-        <NoticeText>
-          지역은 최소 1개,
-          <br /> 최대 2개까지 설정 가능해요.
-        </NoticeText>
-        <RegionList>
-          {myRegions.map((region) => (
-            <li key={region.id}>
-              <p>{region.name}</p>
-              <button onClick={() => openConfirmAlert(region.name)}>
-                <Icon fill="accentText" name="circleXFilled" stroke="none" />
-              </button>
-            </li>
-          ))}
-        </RegionList>
-        <Button
-          backgroundColor="accentText"
-          icon="plus"
-          onClick={() => openModal('searchRegion', {})}
-          size="M"
-          text="추가"
-        />
-      </Content>
-    </ModalBase>
-  );
-};
 
 export const SearchRegionModal: React.FC<SearchRegionModalProps> = ({
   style,
@@ -176,6 +111,7 @@ const ButtonBase = styled.button`
   justify-content: center;
   align-items: center;
 `;
+
 const Header = styled.div`
   padding: 8px 8px 8px 24px;
   display: flex;
@@ -184,6 +120,7 @@ const Header = styled.div`
   font: ${({ theme: { font } }) => font.displayStrong20};
   color: ${({ theme: { color } }) => color.neutralTextStrong};
 `;
+
 const SearchHeader = styled.div`
   padding: 8px;
   display: flex;
@@ -192,35 +129,7 @@ const SearchHeader = styled.div`
   font: ${({ theme: { font } }) => font.displayStrong20};
   color: ${({ theme: { color } }) => color.neutralTextStrong};
 `;
-const NoticeText = styled.p`
-  font: ${({ theme: { font } }) => font.displayDefault12};
-  color: ${({ theme: { color } }) => color.neutralText};
-  text-align: center;
-  margin-bottom: 32px;
-`;
-const Content = styled.div`
-  padding: 40px 16px;
-`;
-const RegionList = styled.ul`
-  font: ${({ theme: { font } }) => font.availableStrong16};
-  color: ${({ theme: { color } }) => color.accentText};
 
-  li {
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: ${({ theme: { color } }) => color.accentPrimary};
-    border-radius: ${({ theme: { radius } }) => radius.small};
-    margin-bottom: 8px;
-  }
-
-  button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
 const AlertWrapper = styled.div`
   position: fixed;
   top: 50%;
