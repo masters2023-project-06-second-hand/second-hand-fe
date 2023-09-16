@@ -1,10 +1,13 @@
 import { privateApi, publicApi } from '../index';
-import { BASE_API_URL, API_ENDPOINTS } from '../constants';
+import { API_ENDPOINTS } from '@constants/endpoints';
 import axios from 'axios';
-import { signupTokenAtom, userInfoAtom } from '../../atoms/userAtom';
+import { userInfoAtom } from '@atoms/userAtom';
 import { useAtom } from 'jotai';
-import { isLoginAtom } from '@atoms/loginAtom';
+import { isLoginAtom, signupTokenAtom } from '@atoms/loginAtom';
+import { fetchUserInfo } from './userInfo';
+import { BASE_API_URL } from '../../envConfig';
 
+/* TODO. 코드들 분리하기 */
 type LoginData = {
   accessToken: string;
   refreshToken: string;
@@ -22,7 +25,11 @@ export const fetchLogin = async (provider: string, queryString: string) => {
     `${BASE_API_URL}${API_ENDPOINTS.LOGIN(provider, queryString)}`,
     { withCredentials: true }
   );
+  return data;
+};
 
+export const fetchLogout = async () => {
+  const { data } = await privateApi.post(`${API_ENDPOINTS.LOGOUT}`);
   return data;
 };
 
@@ -41,7 +48,9 @@ export const useHandleLogout = () => {
   const [, setUserInfo] = useAtom(userInfoAtom);
   const [, setIsLogin] = useAtom(isLoginAtom);
 
-  return () => {
+  const logout = async () => {
+    await fetchLogout();
+
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
 
@@ -49,6 +58,8 @@ export const useHandleLogout = () => {
     setIsLogin(false);
     console.log('isLogin : 로그아웃 됐어요');
   };
+
+  return logout;
 };
 
 export const useHandleLogin = () => {
@@ -63,6 +74,7 @@ export const useHandleLogin = () => {
       const userInfo = await fetchUserInfo(data.memberId);
       setUserInfo(userInfo);
       setIsLogin(true);
+
       console.log('isLogin : 로그인 됐어요');
     } catch (error) {
       console.error(
@@ -74,7 +86,7 @@ export const useHandleLogin = () => {
 };
 
 export const useHandleSignup = () => {
-  const [signupToken] = useAtom(signupTokenAtom);
+  const [signupToken, setSignupToken] = useAtom(signupTokenAtom);
   const [, setUserInfo] = useAtom(userInfoAtom);
   const [, setIsLogin] = useAtom(isLoginAtom);
 
@@ -86,6 +98,7 @@ export const useHandleSignup = () => {
 
     try {
       const responseData = await fetchSignup(data, signupToken);
+      setSignupToken(null);
 
       localStorage.setItem('accessToken', responseData.accessToken);
       localStorage.setItem('refreshToken', responseData.refreshToken);
