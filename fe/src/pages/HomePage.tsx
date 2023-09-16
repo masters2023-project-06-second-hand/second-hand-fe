@@ -1,5 +1,6 @@
-import { useState } from 'react';
 import { styled } from 'styled-components';
+import { useAtom } from 'jotai';
+import { userRegionsAtom } from '@atoms/userAtom';
 import { Header } from '@components/Header/Header';
 import { TextButton } from '@components/Button/TextButton';
 import { Icon } from '@components/Icon/Icon';
@@ -7,20 +8,10 @@ import { RegionDropdown } from '@components/Dropdown/ReigonDropdown';
 import { ProductItem } from '@components/Item/ProductItem';
 import { FabButton } from '@components/Button/FabButton';
 import { usePageNavigator } from '@hooks/usePageNavigator';
-
-const userRegion = {
-  selectedRegionId: 1,
-  regions: [
-    {
-      id: 1,
-      name: '주소1',
-    },
-    {
-      id: 2,
-      name: '주소2',
-    },
-  ],
-};
+import {
+  useSetUserRegionMutation,
+  useGetUserReigions,
+} from '@api/region/region';
 
 const items = [
   {
@@ -123,18 +114,14 @@ const items = [
 
 export const HomePage = () => {
   const { navigateToCategory } = usePageNavigator();
+  useGetUserReigions();
 
-  const { selectedRegionId, regions } = userRegion;
-
-  const [currentRegionId, setCurrentRegionId] =
-    useState<number>(selectedRegionId);
-
-  const currentRegionName =
-    regions.find((r) => r.id === currentRegionId)?.name || '';
+  const setUserRegion = useSetUserRegionMutation();
+  const [userRegions] = useAtom(userRegionsAtom);
+  console.log(userRegions);
 
   const handleSelectRegion = (id: number) => {
-    setCurrentRegionId(id);
-    /* Todo. 선택한 동네로 목록 업데이트 */
+    setUserRegion(id);
   };
 
   return (
@@ -144,12 +131,12 @@ export const HomePage = () => {
           <RegionDropdown
             trigger={
               <TextButton size="M" textColor="neutralTextStrong">
-                {currentRegionName}
+                {userRegions.currentRegion}
                 <Icon name="chevronDown" size="M" stroke="neutralTextStrong" />
               </TextButton>
             }
-            myRegions={regions}
-            currentRegionId={currentRegionId}
+            myRegions={userRegions.regions}
+            selectedRegionId={userRegions.selectedRegionId}
             onSelectRegion={handleSelectRegion}
           />
         </Header.Left>

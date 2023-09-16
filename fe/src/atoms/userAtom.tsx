@@ -1,14 +1,5 @@
-/* 
-  잠시 임시 테스트용.
-  로그인 기능 구현 후 수정할 예정
-*/
-
 import { atom } from 'jotai';
-
-export const userIdAtom = atom(1); /* 얜 지울꺼에요 */
-
-/* signupTOkenAtom은 수정할수도 */
-export const signupTokenAtom = atom(null);
+import { DEFAULT_REGIONS } from '@constants/constants';
 
 type UserInfo = {
   id: number;
@@ -21,23 +12,16 @@ interface Region {
   name: string;
 }
 
-interface UserRegions {
-  selectedRegionId: number;
-  regions: Region[];
-}
-
 export const userInfoAtom = atom<UserInfo>(null);
 
+type UserRegions = {
+  currentRegion: string;
+  regions: Region[];
+  selectedRegionId: number;
+};
+
 export const userRegionsAtom = atom<UserRegions>({
-  selectedRegionId: 1,
-  regions: [
-    {
-      id: 1,
-      name: '역삼1동',
-    },
-    {
-      id: 2,
-      name: '두번째',
-    },
-  ],
+  currentRegion: DEFAULT_REGIONS.currentRegion,
+  regions: DEFAULT_REGIONS.regions,
+  selectedRegionId: DEFAULT_REGIONS.selectedRegionId,
 });
