@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { useModal } from './useModal';
+
 import { CategotyModalProps, AlertModalProps } from './types';
 
 /* Todo. 모달들 파일 분리하기 */
