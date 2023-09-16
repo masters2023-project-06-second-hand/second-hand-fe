@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 import { styled } from 'styled-components';
+import { useAtom } from 'jotai';
+import { isLoginAtom } from '@atoms/loginAtom';
 import { useModal } from '@components/Modal/useModal';
 import { Dropdown } from './Dropdown';
 
@@ -11,7 +13,7 @@ type Regions = {
 type DropdownProps = {
   trigger: ReactNode;
   myRegions: Regions[];
-  currentRegionId: number;
+  selectedRegionId: number | null;
   onSelectRegion: (id: number) => void;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 };
@@ -22,9 +24,10 @@ export const RegionDropdown: React.FC<DropdownProps> = ({
   myRegions,
   position,
   onSelectRegion,
-  currentRegionId,
+  selectedRegionId,
 }) => {
   const { openModal } = useModal();
+  const [isLogin] = useAtom(isLoginAtom);
 
   if (!myRegions) return;
 
@@ -36,14 +39,18 @@ export const RegionDropdown: React.FC<DropdownProps> = ({
           onClick={() => {
             onSelectRegion(region.id);
           }}
-          $isSelected={region.id === currentRegionId}
+          $isSelected={region.id === selectedRegionId}
         >
           {region.name}
         </Option>
       ))}
-      <Setting onClick={() => openModal('regionSetting', {})}>
-        내 동네 설정하기
-      </Setting>
+      {isLogin ? (
+        <Setting onClick={() => openModal('regionSetting', {})}>
+          내 동네 설정하기
+        </Setting>
+      ) : (
+        ''
+      )}
     </Dropdown>
   );
 };
