@@ -1,6 +1,5 @@
 import axios from 'axios';
-import { BASE_API_URL, GOOGLE_OAUTH_URL, NAVER_OAUTH_URL } from './constants';
-
+import { BASE_API_URL } from '../envConfig';
 export const publicApi = axios.create({
   baseURL: `${BASE_API_URL}/api/`,
   headers: {
@@ -13,15 +12,6 @@ export const privateApi = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-});
-
-/* 임시 */
-export const googleOauthApi = axios.create({
-  baseURL: GOOGLE_OAUTH_URL,
-});
-
-export const naverOauthApi = axios.create({
-  baseURL: NAVER_OAUTH_URL,
 });
 
 /** Todo

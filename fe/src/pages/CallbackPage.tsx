@@ -1,27 +1,49 @@
-// import axios from 'axios';
-import axios from 'axios';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useAtom } from 'jotai';
+import { usePageNavigator } from '@hooks/usePageNavigator';
+import { signupTokenAtom } from '@atoms/loginAtom';
+import { fetchLogin, useHandleLogin } from '@api/auth/login';
+import { extractQueryString } from '@utils/index';
 
 export const CallbackPage = () => {
-  // 백엔드와 테스트중
+  const { provider } = useParams();
+
+  const { navigateToJoin, navigateToHome } = usePageNavigator();
+
+  const handleLogin = useHandleLogin();
+  const [, setSignupToken] = useAtom(signupTokenAtom);
+
   useEffect(() => {
     const URL = window.location.href;
-    const parts = URL.split('?');
-    const queryString = parts[1];
+    const queryString = extractQueryString(URL);
 
-    async function fetchData() {
+    async function login() {
       try {
-        const response = await axios.get(
-          `http://ec2-15-164-155-230.ap-northeast-2.compute.amazonaws.com:8080/login/oauth2/code/google?${queryString}`
-        );
-        const data = response.data;
-        console.log(data);
+        if (provider) {
+          const data = await fetchLogin(provider, queryString);
+
+          if (data.accessToken && data.refreshToken) {
+            await handleLogin(data);
+            navigateToHome();
+          }
+        }
       } catch (error) {
-        console.error('데이터를 가져오는 동안 오류가 발생했습니다:', error);
+        /* status 422일 경우 처음 가입 회원, 나머지는 에러 예외처리하기 */
+        if (axios.isAxiosError(error) && error.response) {
+          const signupToken = error.response.data.message.signupToken;
+          setSignupToken(signupToken);
+          navigateToJoin();
+        } else {
+          // Handle other types of errors or re-throw
+          console.error(error);
+        }
       }
     }
 
-    fetchData();
+    login();
   }, []);
+
   return <></>;
 };

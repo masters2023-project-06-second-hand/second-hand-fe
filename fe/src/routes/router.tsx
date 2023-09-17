@@ -11,58 +11,58 @@ import { DetailPage } from '@pages/DetailPage';
 import { JoinPage } from '@pages/JoinPage';
 import { AddPage } from '@pages/AddPage';
 import { CallbackPage } from '@pages/CallbackPage';
+import { PATH } from '@constants/path';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: PATH.HOME,
     element: <Layout />,
     children: [
       {
         errorElement: <ErrorPage />,
         children: [
           {
-            // path: '',
             index: true,
             element: <HomePage />,
           },
           {
-            path: '/category',
+            path: PATH.CATEGORY,
             element: <CategoryPage />,
           },
           {
-            path: '/history',
+            path: PATH.HISTORY,
             element: <HistoryPage />,
           },
           {
-            path: '/liked',
+            path: PATH.LIKED,
             element: <LikePage />,
           },
           {
-            path: '/chat',
+            path: PATH.CHAT,
             element: <ChatPage />,
           },
           {
-            path: '/account',
+            path: PATH.ACCOUNT,
             element: <AccountPage />,
           },
           {
-            path: '/detail',
+            path: `${PATH.DETAIL}/:id`,
             element: <DetailPage />,
           },
           {
-            path: '/add',
+            path: PATH.ADD,
             element: <AddPage />,
           },
           {
-            path: '/join',
+            path: PATH.JOIN,
             element: <JoinPage />,
           },
           {
-            path: '/callback',
+            path: PATH.CALLBACK,
             element: <CallbackPage />,
           },
           {
-            path: '*',
+            path: PATH.FALLBACK,
             element: <ErrorPage />,
           },
         ],

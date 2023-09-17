@@ -1,13 +1,12 @@
-import styled from 'styled-components';
+import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
+import { usePageNavigator } from '@hooks/usePageNavigator';
 
-export type ButtonProps = {
-  onClick: () => void;
-};
+export const FabButton: React.FC = () => {
+  const { navigateToAdd } = usePageNavigator();
 
-export const FabButton: React.FC<ButtonProps> = ({ onClick }) => {
   return (
-    <Fab onClick={onClick}>
+    <Fab onClick={navigateToAdd}>
       <Icon name="plus" stroke="accentText" size="M" />
     </Fab>
   );

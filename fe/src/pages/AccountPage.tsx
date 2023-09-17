@@ -1,20 +1,27 @@
-import { GOOGLE_OAUTH_URL, NAVER_OAUTH_URL } from '@api/constants';
+import { ChangeEvent, useState } from 'react';
+import { styled } from 'styled-components';
 import { Button } from '@components/Button/Button';
 import { Header } from '@components/Header/Header';
 import { ProfileImgInput } from '@components/ProfileImgInput/ProfileImgInput';
+import { GOOGLE_LOGIN_BUTTON_URL, NAVER_LOGIN_BUTTON_URL } from '../envConfig';
 import { MAX_IMAGE_SIZE } from '@constants/constants';
-import { ChangeEvent, useState } from 'react';
-import { styled } from 'styled-components';
+import { isLoginAtom } from '@atoms/loginAtom';
+import { useAtom } from 'jotai';
+import { userInfoAtom } from '@atoms/userAtom';
+import { useHandleLogout } from '@api/auth/login';
 
 export const AccountPage = () => {
   const [profileImg, setProfileImg] = useState<File>();
-  const isLogin = false;
+  const [isLogin] = useAtom(isLoginAtom);
+  const [userInfo] = useAtom(userInfoAtom);
+  const handleLogout = useHandleLogout();
 
+  // 팝업 창으로 수정할지 고민
   const goNaverLogin = () => {
-    location.href = NAVER_OAUTH_URL;
+    location.href = NAVER_LOGIN_BUTTON_URL;
   };
   const goGoogleLogin = () => {
-    location.href = GOOGLE_OAUTH_URL;
+    location.href = GOOGLE_LOGIN_BUTTON_URL;
   };
 
   const onUploadProfileImg = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,14 +40,19 @@ export const AccountPage = () => {
       {isLogin ? (
         <Content>
           <ProfileImgInput
-            imgUrl={profileImg ? URL.createObjectURL(profileImg) : ''}
+            imgUrl={
+              profileImg
+                ? URL.createObjectURL(profileImg)
+                : userInfo?.profileImg || ''
+            }
             onChange={onUploadProfileImg}
           />
-          <UserNickname>litae</UserNickname>
+          <UserNickname>{userInfo?.nickname}</UserNickname>
           <Button
             backgroundColor="accentPrimary"
             size="L"
             text="로그아웃"
+            onClick={handleLogout}
           ></Button>
         </Content>
       ) : (

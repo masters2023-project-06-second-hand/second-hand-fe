@@ -9,6 +9,12 @@ import router from '@routes/router';
 
 const queryClient = new QueryClient({
   /* options */
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 0,
+    },
+  },
 });
 
 function App() {

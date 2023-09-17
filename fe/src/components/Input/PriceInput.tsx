@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import { Input } from './Input';
-import React from 'react';
 
 type Props = {
   currencyUnit: keyof typeof unit;

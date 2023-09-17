@@ -1,7 +1,7 @@
+import { ChangeEvent, InputHTMLAttributes } from 'react';
+import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { MAX_NUMBER_OF_PRODUCT_IMG } from '@constants/constants';
-import React, { ChangeEvent, InputHTMLAttributes } from 'react';
-import { styled } from 'styled-components';
 
 type Props = InputHTMLAttributes<HTMLInputElement> & {
   numberOfImg: number;

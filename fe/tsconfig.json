@@ -34,7 +34,7 @@
       "@routes/*": ["routes/*"],
       "@mocks/*": ["mocks/*"],
       "@api/*": ["api/*"],
-      "@react-query/*": ["react-query/*"]
+      "@atoms/*": ["atoms/*"]
     },
 
     /* jest */
