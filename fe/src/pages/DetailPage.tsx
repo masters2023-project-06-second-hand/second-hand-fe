@@ -9,45 +9,81 @@ import { SellerInfo } from '@components/SellerInfo/SellerInfo';
 import { States } from '@components/States/States';
 import { usePageNavigator } from '@hooks/usePageNavigator';
 import displayTimeAgo from '@utils/displayTimeAgo';
+import { useParams } from 'react-router-dom';
+import { useAtom } from 'jotai';
+import { userInfoAtom } from '@atoms/userAtom';
+import { Loading } from './Loading';
+import { ErrorPage } from './ErrorPage';
+import { MenuDropdown } from '@components/Dropdown/MenuDropdown';
+import { STATES_OF_PRODUCT } from '@constants/constants';
+import { useModal } from '@components/Modal/useModal';
+import { useProductDetail } from '@api/product/useProductDetail';
+import { privateApi } from '@api/index';
+import { API_ENDPOINTS } from '@api/constants';
+import { useMutation } from '@tanstack/react-query';
+import { ProductStatus } from '@api/product/types';
 
 export const DetailPage = () => {
+  const { id } = useParams();
+  const [userInfo] = useAtom(userInfoAtom);
   const { navigateToGoBack } = usePageNavigator();
-  const isWriter = false;
-  const data = {
-    id: 1,
-    writer: {
-      id: 1,
-      nickname: 'litae',
-    },
-    images: [
-      {
-        id: 1,
-        imgUrl:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQg0XVvcoAmRBR09F4CoUaY2VWWD5P36pZ-Hw&usqp=CAU',
-      },
-      {
-        id: 2,
-        imgUrl:
-          'https://www.apple.com/newsroom/images/tile-images/Apple_16-inch-MacBook-Pro_111319.jpg.og.jpg?202308281523',
-      },
-      {
-        id: 3,
-        imgUrl:
-          'https://i0.wp.com/apple-information.com/wp-content/uploads/2022/12/%EC%A0%9C%EB%AA%A9-12%EC%97%86%EC%9D%8C-1.jpg?fit=1024%2C427&ssl=1',
-      },
-    ],
-    productName: 'M2 맥북프로 16인치',
-    categoryName: '가구/인테리어',
-    regionName: '개포1동',
-    createdAt: '2023-09-01 14:22',
-    state: '예약중',
-    content: `어린시절 추억의 향수를 불러 일으키는 롤러 스케이트입니다. 빈티지 특성상 사용감 있지만 전체적으로 깨끗한 상태입니다.
-    촬영용 소품이나, 거실에 장식용으로 추천해 드립니다. 단품 입고 되었습니다. 새 제품으로 보존된 제품으로 전용박스까지 보내드립니다.
-    사이즈는 235 입니다. 어린시절 추억의 향수를 불러 일으키는 롤러 스케이트입니다. 빈티지 특성상 사용감 있지만 전체적으로 깨끗한 상태입니다.
-    촬영용 소품이나, 거실에 장식용으로 추천해 드립니다. 단품 입고 되었습니다. 새 제품으로 보존된 제품으로 전용박스까지 보내드립니다.
-    사이즈는 235 입니다.`,
-    price: 23000,
+  const { openModal } = useModal();
+
+  const { data, isLoading, isError } = useProductDetail(Number(id));
+  if (isLoading) return <Loading />;
+  if (isError) return <ErrorPage />;
+
+  const deleteProduct = async (productId: number) => {
+    const response = await privateApi.delete(
+      API_ENDPOINTS.DELETE_PRODUCT(productId)
+    );
+    return response.data;
   };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const deleteProductMutation = useMutation(
+    (productId: number) => deleteProduct(productId),
+    {
+      onSuccess: () => {
+        navigateToGoBack();
+      },
+    }
+  );
+
+  const updateProductStatus = async (
+    productId: number,
+    status: ProductStatus
+  ) => {
+    const response = await privateApi.put(
+      API_ENDPOINTS.PRODUCT_STATUS(productId),
+      { data: { status: status } }
+    );
+    return response.data;
+  };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const updateProductStatusMutation = useMutation<
+    void,
+    Error,
+    { productId: number; status: ProductStatus }
+  >(({ productId, status }) => updateProductStatus(productId, status), {
+    onSuccess: () => {
+      // queryClient.invalidateQueries([QUERY_KEYS.PRODUCT_DETAIL(data.id)]);
+    },
+  });
+
+  const openConfirmAlert = (productName: string) => {
+    openModal('alert', {
+      message: `${productName}을(를) 삭제하시겠습니까?`,
+      leftButtonText: '취소',
+      rightButtonText: '삭제',
+      onDelete: () => {
+        deleteProductMutation.mutate(data.id);
+      },
+    });
+  };
+
+  const isWriter = userInfo?.id === data.writer.id;
 
   const stat = {
     chattingCount: 2,
@@ -69,11 +105,21 @@ export const DetailPage = () => {
             뒤로
           </TextButton>
         </Header.Left>
-        <Header.Right>
-          <MenuButton>
-            <Icon name="dots" stroke="accentText" />
-          </MenuButton>
-        </Header.Right>
+        {!isWriter && (
+          <MenuDropdown
+            trigger={
+              <Header.Right>
+                <MenuButton>
+                  <Icon name="dots" stroke="accentText" />
+                </MenuButton>
+              </Header.Right>
+            }
+            position="bottom-right"
+          >
+            <li>게시물 수정</li>
+            <li onClick={() => openConfirmAlert(data.productName)}>삭제</li>
+          </MenuDropdown>
+        )}
       </Header>
       <Content>
         <ImgContent>
@@ -81,7 +127,26 @@ export const DetailPage = () => {
         </ImgContent>
         <InfoContent>
           <SellerInfo nickname={data.writer.nickname} />
-          <States name={data.state} />
+          <MenuDropdown
+            trigger={<States name={data.status} />}
+            position="bottom-left"
+          >
+            {STATES_OF_PRODUCT.filter((status) => status !== data.status).map(
+              (statusList: ProductStatus) => (
+                <li
+                  key={statusList}
+                  onClick={() => {
+                    updateProductStatusMutation.mutate({
+                      productId: data.id,
+                      status: statusList,
+                    });
+                  }}
+                >
+                  {statusList}
+                </li>
+              )
+            )}
+          </MenuDropdown>
           <Title>
             <ProductName>{data.productName}</ProductName>
             <ProductInfo>
