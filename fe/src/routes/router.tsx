@@ -46,7 +46,7 @@ const router = createBrowserRouter([
             element: <AccountPage />,
           },
           {
-            path: PATH.DETAIL,
+            path: `${PATH.DETAIL}/:id`,
             element: <DetailPage />,
           },
           {
