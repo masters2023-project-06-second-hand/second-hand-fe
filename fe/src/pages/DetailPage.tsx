@@ -17,10 +17,11 @@ import { ErrorPage } from './ErrorPage';
 import { MenuDropdown } from '@components/Dropdown/MenuDropdown';
 import { STATES_OF_PRODUCT } from '@constants/constants';
 import { useModal } from '@components/Modal/useModal';
-import { useProductDetail } from '@api/product/useProductDetail';
-import { privateApi } from '@api/index';
-import { API_ENDPOINTS } from '@api/constants';
-import { useMutation } from '@tanstack/react-query';
+import {
+  useChangeProductStatusMutation,
+  useDeleteProductMutation,
+  useProductDetail,
+} from '@api/product/product';
 import { ProductStatus } from '@api/product/types';
 
 export const DetailPage = () => {
@@ -30,47 +31,11 @@ export const DetailPage = () => {
   const { openModal } = useModal();
 
   const { data, isLoading, isError } = useProductDetail(Number(id));
+  const changeProductStatus = useChangeProductStatusMutation();
+  const deleteProduct = useDeleteProductMutation();
+
   if (isLoading) return <Loading />;
   if (isError) return <ErrorPage />;
-
-  const deleteProduct = async (productId: number) => {
-    const response = await privateApi.delete(
-      API_ENDPOINTS.DELETE_PRODUCT(productId)
-    );
-    return response.data;
-  };
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const deleteProductMutation = useMutation(
-    (productId: number) => deleteProduct(productId),
-    {
-      onSuccess: () => {
-        navigateToGoBack();
-      },
-    }
-  );
-
-  const updateProductStatus = async (
-    productId: number,
-    status: ProductStatus
-  ) => {
-    const response = await privateApi.put(
-      API_ENDPOINTS.PRODUCT_STATUS(productId),
-      { data: { status: status } }
-    );
-    return response.data;
-  };
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const updateProductStatusMutation = useMutation<
-    void,
-    Error,
-    { productId: number; status: ProductStatus }
-  >(({ productId, status }) => updateProductStatus(productId, status), {
-    onSuccess: () => {
-      // queryClient.invalidateQueries([QUERY_KEYS.PRODUCT_DETAIL(data.id)]);
-    },
-  });
 
   const openConfirmAlert = (productName: string) => {
     openModal('alert', {
@@ -78,7 +43,7 @@ export const DetailPage = () => {
       leftButtonText: '취소',
       rightButtonText: '삭제',
       onDelete: () => {
-        deleteProductMutation.mutate(data.id);
+        deleteProduct.mutate(data.id);
       },
     });
   };
@@ -136,7 +101,7 @@ export const DetailPage = () => {
                 <li
                   key={statusList}
                   onClick={() => {
-                    updateProductStatusMutation.mutate({
+                    changeProductStatus.mutate({
                       productId: data.id,
                       status: statusList,
                     });
