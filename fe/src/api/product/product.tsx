@@ -43,9 +43,9 @@ export const useChangeProductStatusMutation = () => {
     (data: StatusMutation) => updateProductStatus(data.productId, data.status),
     {
       onSuccess: (_, variables) => {
-        queryClient.invalidateQueries([
-          QUERY_KEYS.PRODUCT_DETAIL(variables.productId),
-        ]);
+        queryClient.invalidateQueries(
+          QUERY_KEYS.PRODUCT_DETAIL(variables.productId)
+        );
       },
     }
   );
