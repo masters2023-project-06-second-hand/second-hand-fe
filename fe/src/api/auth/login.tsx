@@ -2,7 +2,7 @@ import { privateApi, publicApi } from '../index';
 import { API_ENDPOINTS } from '@constants/endpoints';
 import axios from 'axios';
 import { userInfoAtom } from '@atoms/userAtom';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { isLoginAtom, signupTokenAtom } from '@atoms/loginAtom';
 import { fetchUserInfo } from './userInfo';
 import { BASE_API_URL } from '../../envConfig';
@@ -45,8 +45,8 @@ export const fetchSignup = async (body: SignupBody, signupToken: string) => {
 };
 
 export const useHandleLogout = () => {
-  const [, setUserInfo] = useAtom(userInfoAtom);
-  const [, setIsLogin] = useAtom(isLoginAtom);
+  const setUserInfo = useSetAtom(userInfoAtom);
+  const setIsLogin = useSetAtom(isLoginAtom);
 
   const logout = async () => {
     await fetchLogout();
@@ -63,8 +63,8 @@ export const useHandleLogout = () => {
 };
 
 export const useHandleLogin = () => {
-  const [, setUserInfo] = useAtom(userInfoAtom);
-  const [, setIsLogin] = useAtom(isLoginAtom);
+  const setUserInfo = useSetAtom(userInfoAtom);
+  const setIsLogin = useSetAtom(isLoginAtom);
 
   return async (data: LoginData) => {
     try {
@@ -87,8 +87,8 @@ export const useHandleLogin = () => {
 
 export const useHandleSignup = () => {
   const [signupToken, setSignupToken] = useAtom(signupTokenAtom);
-  const [, setUserInfo] = useAtom(userInfoAtom);
-  const [, setIsLogin] = useAtom(isLoginAtom);
+  const setUserInfo = useSetAtom(userInfoAtom);
+  const setIsLogin = useSetAtom(isLoginAtom);
 
   return async (data: SignupBody) => {
     if (!signupToken) {
