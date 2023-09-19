@@ -45,12 +45,10 @@ export const RegionDropdown: React.FC<DropdownProps> = ({
           {extractRegionName(region.name)}
         </Option>
       ))}
-      {!isLogin ? (
+      {isLogin && (
         <Setting onClick={() => openModal('regionSetting', {})}>
           내 동네 설정하기
         </Setting>
-      ) : (
-        ''
       )}
     </Dropdown>
   );
