@@ -2,6 +2,7 @@ import ReactDOM from 'react-dom';
 import styled, { keyframes } from 'styled-components';
 import { useAtom } from 'jotai';
 import { toastAtom, animationAtom } from '@atoms/toastAtom';
+import { Icon } from '@components/Icon/Icon';
 
 export const Toast: React.FC = () => {
   const [toastState, setToastState] = useAtom(toastAtom);
@@ -23,6 +24,9 @@ export const Toast: React.FC = () => {
         $type={toastState.type}
         onAnimationEnd={handleAnimationEnd}
       >
+        {toastState.type === 'error' && (
+          <Icon fill="#ff6243" name="circleXFilled" stroke="none" />
+        )}
         <p>{toastState.message}</p>
       </Text>
     </ToastWrapper>,
@@ -74,14 +78,13 @@ const Text = styled.div<{
   bottom: 70px;
   padding: 8px 16px;
   width: ${({ $type }) => ($type === 'success' ? 'max-content' : '100%')};
-  background-color: ${({ $type }) =>
-    $type === 'error' ? '#ff6243' : '#212123'};
-  border: 1px solid transparent;
+  background-color: ${({ $type }) => ($type === 'error' ? '#fff' : '#212123')};
+  border: 1px solid;
   border-radius: ${({ $type, theme: { radius } }) =>
     $type === 'success' ? radius.large : radius.small};
   font: ${({ $type, theme: { font } }) =>
     $type === 'error' ? font.availableStrong12 : font.displayDefault12};
-  color: #e2e2e2;
+  color: ${({ $type }) => ($type === 'error' ? '#ff6243' : '#e2e2e2')};
   z-index: 1000;
   transform: translateX(-50%) translateY(0);
   animation:
