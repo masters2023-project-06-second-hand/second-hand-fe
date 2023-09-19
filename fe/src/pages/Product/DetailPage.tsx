@@ -19,6 +19,8 @@ import {
   useDeleteProductMutation,
 } from '@api/product/product';
 import { Product, ProductStatus } from '@api/product/types';
+import extractRegionName from '@utils/extractRegionName';
+import { QUERY_KEYS } from '@api/queryKey';
 
 export const DetailPage = ({
   productData,
@@ -30,8 +32,12 @@ export const DetailPage = ({
   const [userInfo] = useAtom(userInfoAtom);
   const { navigateToGoBack } = usePageNavigator();
   const { openModal } = useModal();
-  const changeProductStatus = useChangeProductStatusMutation();
-  const deleteProduct = useDeleteProductMutation();
+  const changeProductStatus = useChangeProductStatusMutation(
+    QUERY_KEYS.PRODUCT_DETAIL(productData.id)
+  );
+  const deleteProduct = useDeleteProductMutation(
+    QUERY_KEYS.PRODUCT_DETAIL(productData.id)
+  );
 
   const openConfirmAlert = (productName: string) => {
     openModal('alert', {
@@ -126,7 +132,7 @@ export const DetailPage = ({
       </Content>
       <ActionBar>
         {isWriter ? (
-          <EditBar regionName={productData.regionName} />
+          <EditBar regionName={extractRegionName(productData.regionName)} />
         ) : (
           <PostBar
             id={productData.id}

@@ -20,6 +20,8 @@ import { Product } from '@api/product/types';
 import { Icon } from '@components/Icon/Icon';
 import { useAtom } from 'jotai';
 import { userRegionsAtom } from '@atoms/userAtom';
+import { usePageNavigator } from '@hooks/usePageNavigator';
+import extractRegionName from '@utils/extractRegionName';
 
 export const AddPage = ({
   productData,
@@ -29,8 +31,8 @@ export const AddPage = ({
   goDetailPage?(): void;
 }) => {
   const category = useCategoriesWithoutImages();
+  const { navigateToGoBack } = usePageNavigator();
   const [userRegions] = useAtom(userRegionsAtom);
-  const currentRegionName = userRegions.selectedRegion.name.split(' ').pop();
   const [imgFiles, setImgFiles] = useState<File[]>([]);
   const [productImgs, setProductImgs] = useState<string[]>([]);
   const { value: name, onChange: onChangeName } = useInput(
@@ -46,7 +48,7 @@ export const AddPage = ({
   const [recommendCategories, setRecommendCategories] =
     useState<Categories[]>();
   const isAllRequired = imgFiles.length === 0 || name === '' || content === '';
-  const hasName = name.length !== 0;
+  const hasName = name;
 
   // To do: 카테로그 추천 로직 변경
   useEffect(() => {
@@ -85,7 +87,7 @@ export const AddPage = ({
           <TextButton
             size="M"
             textColor="neutralTextStrong"
-            onClick={goDetailPage}
+            onClick={productData ? goDetailPage : navigateToGoBack}
           >
             닫기
           </TextButton>
@@ -148,14 +150,18 @@ export const AddPage = ({
         </PriceSection>
         <ContentSection>
           <Textarea
-            placeholder={`${currentRegionName}에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)`}
+            placeholder={`${extractRegionName(
+              userRegions.selectedRegion.name
+            )}에 올릴 게시물 내용을 작성해주세요.(판매금지 물품은 게시가 제한될 수 있어요.)`}
             value={content}
             onChange={onChangeContent}
           />
         </ContentSection>
       </Contents>
       <ActionBar>
-        <EditBar regionName={currentRegionName ? currentRegionName : ''} />
+        <EditBar
+          regionName={extractRegionName(userRegions.selectedRegion.name)}
+        />
       </ActionBar>
     </>
   );
