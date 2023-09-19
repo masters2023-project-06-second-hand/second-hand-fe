@@ -6,6 +6,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { isLoginAtom, signupTokenAtom } from '@atoms/loginAtom';
 import { fetchUserInfo } from './userInfo';
 import { BASE_API_URL } from '../../envConfig';
+import { useToast } from '@components/Toast/useToast';
 
 /* TODO. 코드들 분리하기 */
 type LoginData = {
@@ -47,6 +48,7 @@ export const fetchSignup = async (body: SignupBody, signupToken: string) => {
 export const useHandleLogout = () => {
   const setUserInfo = useSetAtom(userInfoAtom);
   const setIsLogin = useSetAtom(isLoginAtom);
+  const toast = useToast();
 
   const logout = async () => {
     await fetchLogout();
@@ -56,7 +58,7 @@ export const useHandleLogout = () => {
 
     setUserInfo(null);
     setIsLogin(false);
-    console.log('isLogin : 로그아웃 됐어요');
+    toast.success('로그아웃 성공!');
   };
 
   return logout;
@@ -65,6 +67,7 @@ export const useHandleLogout = () => {
 export const useHandleLogin = () => {
   const setUserInfo = useSetAtom(userInfoAtom);
   const setIsLogin = useSetAtom(isLoginAtom);
+  const toast = useToast();
 
   return async (data: LoginData) => {
     try {
@@ -74,8 +77,7 @@ export const useHandleLogin = () => {
       const userInfo = await fetchUserInfo(data.memberId);
       setUserInfo(userInfo);
       setIsLogin(true);
-
-      console.log('isLogin : 로그인 됐어요');
+      toast.success('로그인 성공!');
     } catch (error) {
       console.error(
         'Error during fetching user info or setting tokens:',
