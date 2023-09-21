@@ -1,3 +1,4 @@
+import React from 'react';
 import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { StateBadge } from '@components/Badge/StateBadge';
@@ -22,63 +23,65 @@ export type ProductItemProps = {
   item: ProductItem;
 };
 
-export const ProductItem: React.FC<ProductItemProps> = ({ item }) => {
-  const testUserId = 1; // 해당 유저에게만 dots 버튼 떠야함
-  const isWriter = item.writerId === testUserId;
+export const ProductItem = React.forwardRef<HTMLLIElement, ProductItemProps>(
+  ({ item }, ref) => {
+    const testUserId = 1; // 해당 유저에게만 dots 버튼 떠야함
+    const isWriter = item.writerId === testUserId;
 
-  return (
-    <Wrapper>
-      <Thumbnail src={item.thumbnailUrl} />
-      <Content>
-        <Top>
-          <Info>
-            <Title>{item.name}</Title>
-            <RegionAndTime>
-              {item.region} ・ {displayTimeAgo(item.createdAt)}
-            </RegionAndTime>
-            <StateAndPrice>
-              {item.status !== '판매중' && <StateBadge state={item.status} />}
-              <Price>{formatPrice(item.price)}</Price>
-            </StateAndPrice>
-          </Info>
+    return (
+      <Wrapper ref={ref}>
+        <Thumbnail src={item.thumbnailUrl} />
+        <Content>
+          <Top>
+            <Info>
+              <Title>{item.name}</Title>
+              <RegionAndTime>
+                {item.region} ・ {displayTimeAgo(item.createdAt)}
+              </RegionAndTime>
+              <StateAndPrice>
+                {item.status !== '판매중' && <StateBadge state={item.status} />}
+                <Price>{formatPrice(item.price)}</Price>
+              </StateAndPrice>
+            </Info>
 
-          {isWriter && (
-            <MoreButton>
-              <Dropdown
-                trigger={
-                  <Icon name="dots" size="M" stroke="neutralTextStrong" />
-                }
-                position="bottom-right"
-              >
-                {getDropdownItems(item.status).map((option) => (
-                  /* Todo. 클릭 시 옵션별 처리 추가하기 */
-                  <li key={option.id} onClick={() => {}}>
-                    {option.name}
-                  </li>
-                ))}
-              </Dropdown>
-            </MoreButton>
-          )}
-        </Top>
+            {isWriter && (
+              <MoreButton>
+                <Dropdown
+                  trigger={
+                    <Icon name="dots" size="M" stroke="neutralTextStrong" />
+                  }
+                  position="bottom-right"
+                >
+                  {getDropdownItems(item.status).map((option) => (
+                    /* Todo. 클릭 시 옵션별 처리 추가하기 */
+                    <li key={option.id} onClick={() => {}}>
+                      {option.name}
+                    </li>
+                  ))}
+                </Dropdown>
+              </MoreButton>
+            )}
+          </Top>
 
-        <ChatAndLike>
-          {item.chattingCount > 0 && (
-            <Chat>
-              <Icon name="message" size="S" stroke="neutralTextWeak" />
-              {displayCount(item.chattingCount)}
-            </Chat>
-          )}
-          {item.likeCount > 0 && (
-            <Like>
-              <Icon name="heart" size="S" stroke="neutralTextWeak" />
-              {displayCount(item.likeCount)}
-            </Like>
-          )}
-        </ChatAndLike>
-      </Content>
-    </Wrapper>
-  );
-};
+          <ChatAndLike>
+            {item.chattingCount > 0 && (
+              <Chat>
+                <Icon name="message" size="S" stroke="neutralTextWeak" />
+                {displayCount(item.chattingCount)}
+              </Chat>
+            )}
+            {item.likeCount > 0 && (
+              <Like>
+                <Icon name="heart" size="S" stroke="neutralTextWeak" />
+                {displayCount(item.likeCount)}
+              </Like>
+            )}
+          </ChatAndLike>
+        </Content>
+      </Wrapper>
+    );
+  }
+);
 
 const Wrapper = styled.li`
   padding: 16px 0;

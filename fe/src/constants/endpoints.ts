@@ -7,6 +7,7 @@ export const API_ENDPOINTS = {
   CATEGORIES: (includeImages: boolean) =>
     `/categories?includeImages=${includeImages}`,
 
+  PRODUCTS: '/products',
   DELETE_PRODUCT: (productId: number) => `/products/${productId}`,
   POST_NEW_PRODUCT: () => '/products',
   PRODUCT_DETAIL: (productId: number) => `/products/${productId}`,
