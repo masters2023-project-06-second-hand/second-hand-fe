@@ -12,7 +12,7 @@ interface Region {
   name: string;
 }
 
-interface UserRegions {
+export interface UserRegions {
   selectedRegionId: number;
   regions: Region[];
 }
