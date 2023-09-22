@@ -13,12 +13,25 @@ export type Product = {
   writer: Writer;
   images: Image[];
   productName: string;
-  categoryName: string;
-  regionName: string;
+  category: {
+    id: number;
+    name: string;
+  };
+  region: {
+    id: number;
+    name: string;
+  };
   createdAt: string;
   status: ProductStatus;
   content: string;
   price: number;
+};
+
+export type ProductStatProps = {
+  chattingCount: number;
+  likeCount: number;
+  viewCount: number;
+  isLiked: boolean;
 };
 
 export type ProductStatus = '판매중' | '예약중' | '판매완료';

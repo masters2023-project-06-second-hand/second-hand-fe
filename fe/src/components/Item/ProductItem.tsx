@@ -3,10 +3,11 @@ import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { StateBadge } from '@components/Badge/StateBadge';
 import { formatPrice, displayTimeAgo, displayCount } from '@utils/index';
-import { getDropdownItems } from './getDropdownItem';
 import { userInfoAtom } from '@atoms/userAtom';
 import { useAtom } from 'jotai';
 import { BottomMenu } from '@components/BottomMenu/BottomMenu';
+import { getDropdownItems } from '@components/BottomMenu/getProductStatus';
+import { usePageNavigator } from '@hooks/usePageNavigator';
 
 type ProductItem = {
   id: number;
@@ -29,16 +30,22 @@ export const ProductItem = React.forwardRef<HTMLLIElement, ProductItemProps>(
   ({ item }, ref) => {
     const [userInfo] = useAtom(userInfoAtom);
     const [menuVisible, setMenuVisible] = useState(false);
+    const { navigateToDetail } = usePageNavigator();
 
     const isWriter = userInfo ? item.writerId === userInfo.id : false;
 
     return (
       <Wrapper ref={ref}>
-        <Thumbnail src={item.thumbnailUrl} />
+        <Thumbnail
+          onClick={() => navigateToDetail(item.id)}
+          src={item.thumbnailUrl}
+        />
         <Content>
           <Top>
             <Info>
-              <Title>{item.name}</Title>
+              <Title onClick={() => navigateToDetail(item.id)}>
+                {item.name}
+              </Title>
               <RegionAndTime>
                 {item.region} ・ {displayTimeAgo(item.createdAt)}
               </RegionAndTime>
@@ -96,6 +103,7 @@ const Thumbnail = styled.img`
   background-size: cover;
   border-radius: ${({ theme: { radius } }) => radius.small};
   border: 1px solid ${({ theme: { color } }) => color.neutralBorder};
+  cursor: pointer;
 `;
 const Content = styled.div`
   flex: 1;
@@ -119,6 +127,7 @@ const Title = styled.h3`
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
+  cursor: pointer;
 `;
 const RegionAndTime = styled.p`
   font: ${({ theme: { font } }) => font.displayDefault12};

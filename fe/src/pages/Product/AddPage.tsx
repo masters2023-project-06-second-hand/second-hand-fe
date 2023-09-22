@@ -7,7 +7,7 @@ import { TextButton } from '@components/Button/TextButton';
 import { Header } from '@components/Header/Header';
 import { Input } from '@components/Input/Input';
 import { PriceInput } from '@components/Input/PriceInput';
-import { PictureItem } from '@components/PictureItem/PictureItem';
+
 import { Tag } from '@components/Tag/Tag';
 import { Textarea } from '@components/Textarea/Textarea';
 import { useInput } from '@hooks/useInput';
@@ -24,8 +24,8 @@ import extractRegionName from '@utils/extractRegionName';
 import { useModal } from '@components/Modal/useModal';
 import { ImgProps } from '@api/images/type';
 import { usePostProductMutation } from '@api/product/product';
-import { useToast } from '@components/Toast/useToast';
 import { useDeleteImgMutation, usePostImgMutation } from '@api/images/images';
+import { PictureItem } from '@components/PictureItem/PictureItem';
 
 export const AddPage = ({
   productData,
@@ -34,7 +34,6 @@ export const AddPage = ({
   productData?: Product;
   goDetailPage?(): void;
 }) => {
-  const toast = useToast();
   const category = useCategoriesWithoutImages();
   const { openModal } = useModal();
   const { navigateToGoBack } = usePageNavigator();
@@ -52,7 +51,7 @@ export const AddPage = ({
     userRegions.selectedRegion.id
   );
   const [selectedCategory, setSelectedCategory] = useState<number | null>(
-    productData ? 1 : null
+    productData ? productData.category.id : null
   );
   const [imgData, setImgData] = useState<ImgProps[]>(
     productData ? productData.images : []
@@ -79,7 +78,6 @@ export const AddPage = ({
   const deleteProductImg = (imgId: number) => {
     const updatedImgData = imgData.filter((img) => img.id !== imgId);
     setImgData(updatedImgData);
-    toast.noti('이미지가 삭제되었습니다');
   };
 
   const selectRegion = (regionId: number) => {
