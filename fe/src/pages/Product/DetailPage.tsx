@@ -17,15 +17,17 @@ import {
   useChangeProductStatusMutation,
   useDeleteProductMutation,
 } from '@api/product/product';
-import { Product, ProductStatus } from '@api/product/types';
+import { Product, ProductStatProps, ProductStatus } from '@api/product/types';
 import { QUERY_KEYS } from '@api/queryKey';
 import { useToast } from '@components/Toast/useToast';
 
 export const DetailPage = ({
   productData,
   goEditPage,
+  productStat,
 }: {
   productData: Product;
+  productStat: ProductStatProps;
   goEditPage(): void;
 }) => {
   const [userInfo] = useAtom(userInfoAtom);
@@ -53,13 +55,6 @@ export const DetailPage = ({
   };
 
   const isWriter = userInfo?.id === productData.writer.id;
-
-  const stat = {
-    chattingCount: 2,
-    likeCount: 2,
-    viewCount: 2,
-    isLiked: true,
-  };
 
   return (
     <>
@@ -122,21 +117,22 @@ export const DetailPage = ({
           <Title>
             <ProductName>{productData.productName}</ProductName>
             <ProductInfo>
-              {productData.categoryName} ・{' '}
+              {productData.category.name} ・{' '}
               {displayTimeAgo(productData.createdAt)}
             </ProductInfo>
           </Title>
           <ProductContent>{productData.content}</ProductContent>
+
           <ProductStats>
-            채팅 {stat.chattingCount} 관심 {stat.likeCount} 조회{' '}
-            {stat.viewCount}
+            채팅 {productStat.chattingCount} 관심 {productStat.likeCount} 조회{' '}
+            {productStat.viewCount}
           </ProductStats>
         </InfoContent>
       </Content>
       <ActionBar>
         <PostBar
           id={productData.id}
-          isLiked={stat.isLiked}
+          isLiked={productStat.isLiked}
           price={productData.price}
           isWriter={isWriter}
         />
