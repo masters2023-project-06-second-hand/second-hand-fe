@@ -67,6 +67,15 @@ export const RegionSettingModal: React.FC<RegionSettingModalProps> = ({
 
     openModal('searchRegion', {
       onSelectRegion: (regionId) => {
+        const isRegionAlreadyAdded = userRegions.regions.some(
+          (region) => region.id === regionId
+        );
+
+        if (isRegionAlreadyAdded) {
+          toast.noti('이미 추가된 지역입니다.');
+          return;
+        }
+
         addUserRegion(regionId);
         closeModal();
       },
