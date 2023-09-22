@@ -6,14 +6,14 @@ type DropdownProps = {
   trigger: ReactNode;
   children: ReactNode;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-  size: 'L' | 'S';
+  size?: 'L' | 'S';
 };
 
 export const Dropdown: React.FC<DropdownProps> = ({
   trigger,
   children,
   position = 'bottom-left',
-  size,
+  size = 'L',
 }) => {
   const { isOpen, toggleDropdown, dropdownRef } = useDropdown();
 
