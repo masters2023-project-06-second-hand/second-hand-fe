@@ -4,7 +4,8 @@ import { LikeButton } from '@components/Button/LikeButton';
 import formatPrice from '@utils/formatPrice';
 import { privateApi } from '@api/index';
 import { API_ENDPOINTS } from '@constants/endpoints';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@api/queryKey';
 
 type Props = {
   id: number;
@@ -27,7 +28,11 @@ export const PostBar: React.FC<Props> = ({ id, isLiked, price, isWriter }) => {
   };
 
   const useProductLikedMutation = () => {
-    const { mutate } = useMutation(changeProductLiked);
+    const queryClient = useQueryClient();
+    const { mutate } = useMutation(changeProductLiked, {
+      onSuccess: () =>
+        queryClient.invalidateQueries(QUERY_KEYS.PRODUCT_STAT(id)),
+    });
 
     return { mutate };
   };
