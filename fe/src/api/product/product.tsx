@@ -6,7 +6,12 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query';
-import { Product, ProductStatus } from './types';
+import {
+  NewProductProps,
+  Product,
+  ProductStatus,
+  StatusMutation,
+} from './types';
 import { QUERY_KEYS } from '@api/queryKey';
 
 const getProductDetail = async (productId: number) => {
@@ -18,11 +23,6 @@ export const useProductDetail = (productId: number) => {
   return useQuery<Product>(QUERY_KEYS.PRODUCT_DETAIL(productId), () =>
     getProductDetail(productId)
   );
-};
-
-type StatusMutation = {
-  productId: number;
-  status: ProductStatus;
 };
 
 const updateProductStatus = async (
@@ -71,5 +71,19 @@ export const useDeleteProductMutation = (queryKey: QueryKey) => {
       },
     }
   );
+  return { mutate };
+};
+
+const postNewProduct = async (productData: NewProductProps) => {
+  const response = await privateApi.post(
+    API_ENDPOINTS.POST_NEW_PRODUCT(),
+    productData
+  );
+
+  return response.data;
+};
+
+export const usePostProductMutation = () => {
+  const { mutate } = useMutation(postNewProduct);
   return { mutate };
 };
