@@ -9,9 +9,12 @@ import {
 import {
   NewProductProps,
   Product,
+  ProductStatProps,
   ProductStatus,
   StatusMutation,
 } from './types';
+import { usePageNavigator } from '@hooks/usePageNavigator';
+import { useToast } from '@components/Toast/useToast';
 import { QUERY_KEYS } from '@api/queryKey';
 
 const getProductDetail = async (productId: number) => {
@@ -22,6 +25,18 @@ const getProductDetail = async (productId: number) => {
 export const useProductDetail = (productId: number) => {
   return useQuery<Product>(QUERY_KEYS.PRODUCT_DETAIL(productId), () =>
     getProductDetail(productId)
+  );
+};
+
+const getProductStat = async (productId: number) => {
+  const { data } = await publicApi.get(API_ENDPOINTS.PRODUCT_STAT(productId));
+
+  return data;
+};
+
+export const useProductStat = (productId: number) => {
+  return useQuery<ProductStatProps>(QUERY_KEYS.PRODUCT_STAT(productId), () =>
+    getProductStat(productId)
   );
 };
 
@@ -84,6 +99,16 @@ const postNewProduct = async (productData: NewProductProps) => {
 };
 
 export const usePostProductMutation = () => {
-  const { mutate } = useMutation(postNewProduct);
+  const { navigateToHome } = usePageNavigator();
+  const toast = useToast();
+  const { mutate } = useMutation(postNewProduct, {
+    onSuccess: () => {
+      navigateToHome();
+      toast.noti('상품이 등록되었습니다.');
+    },
+    onError: () => {
+      toast.error('에러가 발생했습니다. 다시 시도해주세요.');
+    },
+  });
   return { mutate };
 };
