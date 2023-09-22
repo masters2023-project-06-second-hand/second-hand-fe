@@ -15,15 +15,21 @@ export type AlertModalProps = BaseModalProps & {
 };
 
 export type RegionSettingModalProps = BaseModalProps;
-export type SearchRegionModalProps = BaseModalProps;
 export type CategoryModalProps = BaseModalProps & {
   selectedCategoryId?: number;
   categoryData: CategoryWithoutImgProps[];
   onClick: (categoryId: number) => void;
 };
 
+export type SearchRegionModalProps = BaseModalProps & {
+  onSelectRegion: (regionId: number) => void;
+};
+
 export type ModalPropsMapping = {
-  [key in ModalType]: BaseModalProps | AlertModalProps | CategoryModalProps;
+  regionSetting: RegionSettingModalProps;
+  searchRegion: SearchRegionModalProps;
+  category: CategoryModalProps;
+  alert: AlertModalProps;
 };
 
 export type ModalState<T extends ModalType = ModalType> = {
