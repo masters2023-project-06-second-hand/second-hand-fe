@@ -3,6 +3,7 @@ import { multiFormApi, privateApi } from '..';
 import { MAX_IMAGE_SIZE } from '@constants/constants';
 import { useMutation } from '@tanstack/react-query';
 import { ImgProps } from './type';
+import { useToast } from '@components/Toast/useToast';
 
 const uploadImage = async (file: FileList) => {
   if (file[0].size > MAX_IMAGE_SIZE) {
@@ -40,9 +41,11 @@ const deleteProductImg = async (imgId: number) => {
 };
 
 export const useDeleteImgMutation = (deleteImg: (imgId: number) => void) => {
+  const toast = useToast();
   const { mutate } = useMutation((imgId: number) => deleteProductImg(imgId), {
     onSuccess: (data, imgId) => {
       deleteImg(imgId);
+      toast.noti('이미지가 삭제되었습니다');
     },
   });
   return { mutate };
