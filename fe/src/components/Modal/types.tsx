@@ -15,7 +15,6 @@ export type AlertModalProps = BaseModalProps & {
 };
 
 export type RegionSettingModalProps = BaseModalProps;
-export type SearchRegionModalProps = BaseModalProps;
 export type CategoryModalProps = BaseModalProps & {
   selectedCategoryId?: number;
   categoryData: CategoryWithoutImgProps[];
@@ -25,12 +24,11 @@ export type CategoryModalProps = BaseModalProps & {
 export type SearchRegionModalProps = BaseModalProps & {
   onSelectRegion: (regionId: number) => void;
 };
-export type CategotyModalProps = BaseModalProps;
 
 export type ModalPropsMapping = {
   regionSetting: RegionSettingModalProps;
   searchRegion: SearchRegionModalProps;
-  category: CategotyModalProps;
+  category: CategoryModalProps;
   alert: AlertModalProps;
 };
 

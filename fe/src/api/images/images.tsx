@@ -44,6 +44,7 @@ export const useDeleteImgMutation = (deleteImg: (imgId: number) => void) => {
   const toast = useToast();
   const { mutate } = useMutation((imgId: number) => deleteProductImg(imgId), {
     onSuccess: (data, imgId) => {
+      console.log(data); /* 지울 콘솔입니다 */
       deleteImg(imgId);
       toast.noti('이미지가 삭제되었습니다');
     },
