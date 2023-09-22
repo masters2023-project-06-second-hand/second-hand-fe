@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { StateBadge } from '@components/Badge/StateBadge';
-import { Dropdown } from '@components/Dropdown/Dropdown';
 import { formatPrice, displayTimeAgo, displayCount } from '@utils/index';
 import { getDropdownItems } from './getDropdownItem';
+import { userInfoAtom } from '@atoms/userAtom';
+import { useAtom } from 'jotai';
+import { BottomMenu } from '@components/BottomMenu/BottomMenu';
 
 type ProductItem = {
   id: number;
@@ -25,8 +27,10 @@ export type ProductItemProps = {
 
 export const ProductItem = React.forwardRef<HTMLLIElement, ProductItemProps>(
   ({ item }, ref) => {
-    const testUserId = 1; // 해당 유저에게만 dots 버튼 떠야함
-    const isWriter = item.writerId === testUserId;
+    const [userInfo] = useAtom(userInfoAtom);
+    const [menuVisible, setMenuVisible] = useState(false);
+
+    const isWriter = userInfo ? item.writerId === userInfo.id : false;
 
     return (
       <Wrapper ref={ref}>
@@ -45,21 +49,16 @@ export const ProductItem = React.forwardRef<HTMLLIElement, ProductItemProps>(
             </Info>
 
             {isWriter && (
-              <MoreButton>
-                <Dropdown
-                  trigger={
-                    <Icon name="dots" size="M" stroke="neutralTextStrong" />
-                  }
-                  position="bottom-right"
-                >
-                  {getDropdownItems(item.status).map((option) => (
-                    /* Todo. 클릭 시 옵션별 처리 추가하기 */
-                    <li key={option.id} onClick={() => {}}>
-                      {option.name}
-                    </li>
-                  ))}
-                </Dropdown>
+              <MoreButton onClick={() => setMenuVisible(!menuVisible)}>
+                <Icon name="dots" size="M" stroke="neutralTextStrong" />
               </MoreButton>
+            )}
+            {menuVisible && (
+              <BottomMenu
+                productId={item.id}
+                menuList={getDropdownItems(item.status)}
+                onClose={() => setMenuVisible(!menuVisible)}
+              />
             )}
           </Top>
 
