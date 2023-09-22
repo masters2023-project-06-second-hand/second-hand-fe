@@ -4,6 +4,7 @@ import { RegionSettingModalProps } from './types';
 import { useModal } from './useModal';
 import { Icon } from '@components/Icon/Icon';
 import {
+  useAddUserRegionMutation,
   useDeleteUserRegionMutation,
   useSetUserRegionMutation,
 } from '@api/region/region';
@@ -26,6 +27,7 @@ export const RegionSettingModal: React.FC<RegionSettingModalProps> = ({
   const [userRegions] = useAtom(userRegionsAtom);
   const toast = useToast();
   const myRegionCount = userRegions.regions.length;
+  const addUserRegion = useAddUserRegionMutation();
 
   const openConfirmAlert = (region: Region) => {
     openModal('alert', {
@@ -63,7 +65,12 @@ export const RegionSettingModal: React.FC<RegionSettingModalProps> = ({
       return;
     }
 
-    openModal('searchRegion', {});
+    openModal('searchRegion', {
+      onSelectRegion: (regionId) => {
+        addUserRegion(regionId);
+        closeModal();
+      },
+    });
   };
 
   return (

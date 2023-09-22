@@ -6,7 +6,7 @@ export const API_ENDPOINTS = {
 
   CATEGORIES: (includeImages: boolean) =>
     `/categories?includeImages=${includeImages}`,
-
+  REGIONS: '/regions',
   PRODUCTS: '/products',
   DELETE_PRODUCT: (productId: number) => `/products/${productId}`,
   DELETE_PRODUCT_IMG: (imgId: number) => `/images/${imgId}`,

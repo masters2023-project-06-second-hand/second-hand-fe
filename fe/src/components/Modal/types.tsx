@@ -22,8 +22,16 @@ export type CategoryModalProps = BaseModalProps & {
   onClick: (categoryId: number) => void;
 };
 
+export type SearchRegionModalProps = BaseModalProps & {
+  onSelectRegion: (regionId: number) => void;
+};
+export type CategotyModalProps = BaseModalProps;
+
 export type ModalPropsMapping = {
-  [key in ModalType]: BaseModalProps | AlertModalProps | CategoryModalProps;
+  regionSetting: RegionSettingModalProps;
+  searchRegion: SearchRegionModalProps;
+  category: CategotyModalProps;
+  alert: AlertModalProps;
 };
 
 export type ModalState<T extends ModalType = ModalType> = {

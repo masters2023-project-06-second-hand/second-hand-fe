@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 import { Icon } from '@components/Icon/Icon';
 import { StateBadge } from '@components/Badge/StateBadge';
 import { formatPrice, displayTimeAgo, displayCount } from '@utils/index';
+import { getDropdownItems } from '../BottomMenu/getProductStatus';
 import { userInfoAtom } from '@atoms/userAtom';
 import { useAtom } from 'jotai';
 import { BottomMenu } from '@components/BottomMenu/BottomMenu';
