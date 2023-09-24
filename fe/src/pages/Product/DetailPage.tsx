@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 import { ActionBar } from '@components/ActionBar/ActionBar';
-import { EditBar } from '@components/ActionBar/EditBar';
 import { PostBar } from '@components/ActionBar/PostBar';
 import { TextButton } from '@components/Button/TextButton';
 import { Header } from '@components/Header/Header';
@@ -9,68 +8,38 @@ import { SellerInfo } from '@components/SellerInfo/SellerInfo';
 import { States } from '@components/States/States';
 import { usePageNavigator } from '@hooks/usePageNavigator';
 import displayTimeAgo from '@utils/displayTimeAgo';
-import { useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { userInfoAtom } from '@atoms/userAtom';
-import { Loading } from './Loading';
-import { ErrorPage } from './ErrorPage';
 import { MenuDropdown } from '@components/Dropdown/MenuDropdown';
 import { STATES_OF_PRODUCT } from '@constants/constants';
 import { useModal } from '@components/Modal/useModal';
-import { useProductDetail } from '@api/product/useProductDetail';
-import { privateApi } from '@api/index';
-import { API_ENDPOINTS } from '@api/constants';
-import { useMutation } from '@tanstack/react-query';
-import { ProductStatus } from '@api/product/types';
+import {
+  useChangeProductStatusMutation,
+  useDeleteProductMutation,
+} from '@api/product/product';
+import { Product, ProductStatProps, ProductStatus } from '@api/product/types';
+import { QUERY_KEYS } from '@api/queryKey';
+import { useToast } from '@components/Toast/useToast';
 
-export const DetailPage = () => {
-  const { id } = useParams();
+export const DetailPage = ({
+  productData,
+  goEditPage,
+  productStat,
+}: {
+  productData: Product;
+  productStat: ProductStatProps;
+  goEditPage(): void;
+}) => {
   const [userInfo] = useAtom(userInfoAtom);
-  const { navigateToGoBack } = usePageNavigator();
+  const toast = useToast();
+  const { navigateToGoBack, navigateToHome } = usePageNavigator();
   const { openModal } = useModal();
-
-  const { data, isLoading, isError } = useProductDetail(Number(id));
-  if (isLoading) return <Loading />;
-  if (isError) return <ErrorPage />;
-
-  const deleteProduct = async (productId: number) => {
-    const response = await privateApi.delete(
-      API_ENDPOINTS.DELETE_PRODUCT(productId)
-    );
-    return response.data;
-  };
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const deleteProductMutation = useMutation(
-    (productId: number) => deleteProduct(productId),
-    {
-      onSuccess: () => {
-        navigateToGoBack();
-      },
-    }
+  const changeProductStatus = useChangeProductStatusMutation(
+    QUERY_KEYS.PRODUCT_DETAIL(productData.id)
   );
-
-  const updateProductStatus = async (
-    productId: number,
-    status: ProductStatus
-  ) => {
-    const response = await privateApi.put(
-      API_ENDPOINTS.PRODUCT_STATUS(productId),
-      { data: { status: status } }
-    );
-    return response.data;
-  };
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const updateProductStatusMutation = useMutation<
-    void,
-    Error,
-    { productId: number; status: ProductStatus }
-  >(({ productId, status }) => updateProductStatus(productId, status), {
-    onSuccess: () => {
-      // queryClient.invalidateQueries([QUERY_KEYS.PRODUCT_DETAIL(data.id)]);
-    },
-  });
+  const deleteProduct = useDeleteProductMutation(
+    QUERY_KEYS.PRODUCT_DETAIL(productData.id)
+  );
 
   const openConfirmAlert = (productName: string) => {
     openModal('alert', {
@@ -78,19 +47,14 @@ export const DetailPage = () => {
       leftButtonText: '취소',
       rightButtonText: '삭제',
       onDelete: () => {
-        deleteProductMutation.mutate(data.id);
+        deleteProduct.mutate(productData.id);
+        toast.noti(`${productName}(이)가 삭제되었습니다`);
+        navigateToHome();
       },
     });
   };
 
-  const isWriter = userInfo?.id === data.writer.id;
-
-  const stat = {
-    chattingCount: 2,
-    likeCount: 2,
-    viewCount: 2,
-    isLiked: true,
-  };
+  const isWriter = userInfo?.id === productData.writer.id;
 
   return (
     <>
@@ -105,7 +69,7 @@ export const DetailPage = () => {
             뒤로
           </TextButton>
         </Header.Left>
-        {!isWriter && (
+        {isWriter && (
           <MenuDropdown
             trigger={
               <Header.Right>
@@ -116,56 +80,62 @@ export const DetailPage = () => {
             }
             position="bottom-right"
           >
-            <li>게시물 수정</li>
-            <li onClick={() => openConfirmAlert(data.productName)}>삭제</li>
+            <li onClick={goEditPage}>게시물 수정</li>
+            <li onClick={() => openConfirmAlert(productData.productName)}>
+              삭제
+            </li>
           </MenuDropdown>
         )}
       </Header>
       <Content>
         <ImgContent>
-          <ProductImg src={data.images[0].imgUrl} />
+          <ProductImg src={productData.images[0].imgUrl} />
         </ImgContent>
         <InfoContent>
-          <SellerInfo nickname={data.writer.nickname} />
+          <SellerInfo nickname={productData.writer.nickname} />
           <MenuDropdown
-            trigger={<States name={data.status} />}
+            trigger={<States name={productData.status} />}
             position="bottom-left"
+            size="S"
           >
-            {STATES_OF_PRODUCT.filter((status) => status !== data.status).map(
-              (statusList: ProductStatus) => (
-                <li
-                  key={statusList}
-                  onClick={() => {
-                    updateProductStatusMutation.mutate({
-                      productId: data.id,
-                      status: statusList,
-                    });
-                  }}
-                >
-                  {statusList}
-                </li>
-              )
-            )}
+            {STATES_OF_PRODUCT.filter(
+              (status) => status !== productData.status
+            ).map((statusList: ProductStatus) => (
+              <li
+                key={statusList}
+                onClick={() => {
+                  changeProductStatus.mutate({
+                    productId: productData.id,
+                    status: statusList,
+                  });
+                }}
+              >
+                {statusList}
+              </li>
+            ))}
           </MenuDropdown>
           <Title>
-            <ProductName>{data.productName}</ProductName>
+            <ProductName>{productData.productName}</ProductName>
             <ProductInfo>
-              {data.categoryName} ・ {displayTimeAgo(data.createdAt)}
+              {productData.category.name} ・{' '}
+              {displayTimeAgo(productData.createdAt)}
             </ProductInfo>
           </Title>
-          <ProductContent>{data.content}</ProductContent>
+          <ProductContent>{productData.content}</ProductContent>
+
           <ProductStats>
-            채팅 {stat.chattingCount} 관심 {stat.likeCount} 조회{' '}
-            {stat.viewCount}
+            채팅 {productStat.chattingCount} 관심 {productStat.likeCount} 조회{' '}
+            {productStat.viewCount}
           </ProductStats>
         </InfoContent>
       </Content>
       <ActionBar>
-        {isWriter ? (
-          <EditBar regionName={data.regionName} />
-        ) : (
-          <PostBar id={data.id} isLiked={stat.isLiked} price={data.price} />
-        )}
+        <PostBar
+          id={productData.id}
+          isLiked={productStat.isLiked}
+          price={productData.price}
+          isWriter={isWriter}
+        />
       </ActionBar>
     </>
   );

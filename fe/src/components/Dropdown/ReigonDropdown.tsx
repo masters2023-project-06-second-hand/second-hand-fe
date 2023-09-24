@@ -4,6 +4,7 @@ import { useAtom } from 'jotai';
 import { isLoginAtom } from '@atoms/loginAtom';
 import { useModal } from '@components/Modal/useModal';
 import { Dropdown } from './Dropdown';
+import extractRegionName from '@utils/extractRegionName';
 
 type Regions = {
   id: number;
@@ -18,7 +19,6 @@ type DropdownProps = {
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 };
 
-// Todo. 목록에 '내 동네 설정하기' 없는 경우도 만들어줘야함
 export const RegionDropdown: React.FC<DropdownProps> = ({
   trigger,
   myRegions,
@@ -41,15 +41,13 @@ export const RegionDropdown: React.FC<DropdownProps> = ({
           }}
           $isSelected={region.id === selectedRegionId}
         >
-          {region.name}
+          {extractRegionName(region.name)}
         </Option>
       ))}
-      {isLogin ? (
+      {isLogin && (
         <Setting onClick={() => openModal('regionSetting', {})}>
           내 동네 설정하기
         </Setting>
-      ) : (
-        ''
       )}
     </Dropdown>
   );
