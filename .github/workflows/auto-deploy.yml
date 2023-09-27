@@ -1,7 +1,7 @@
 name: issue-tracker auto deploy
 
 on:
-  pull_request:
+  push:
     branches: [ "fe-release" ]
 
 
