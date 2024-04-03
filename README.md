@@ -108,8 +108,12 @@ https://github.com/masters2023-project-06-second-hand/second-hand-fe/assets/9526
 
 - 실시간 채팅 기능, 로그인 유지
 
+## 페이지 및 컴포넌트 설계
+![image](https://github.com/masters2023-project-06-second-hand/second-hand-fe/assets/95265031/e7019d65-3399-4ce8-b699-b1d1cf9899e9)
+[피그마 링크 바로가기](https://www.figma.com/file/3YNnwoMIt6yPmDjQE1Aln7/Team6_%EC%A4%91%EA%B3%A0%EA%B1%B0%EB%9E%98_FE_%EC%84%A4%EA%B3%84?type=whiteboard&node-id=0%3A1&t=3FMPw2nmvb40AiBL-1)
+
 ## API 명세
-https://solid-hoverfly-995.notion.site/4f82f6adbf2d4166935dbd681d1c6bbe?v=72a0505e5c43403e85b990a5a8db200b&pvs=74
+[API 명세 바로가기](https://solid-hoverfly-995.notion.site/4f82f6adbf2d4166935dbd681d1c6bbe?v=72a0505e5c43403e85b990a5a8db200b&pvs=74)
 
 ## 회고
 
